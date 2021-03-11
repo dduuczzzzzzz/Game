@@ -9,6 +9,75 @@ GameBase::GameBase()
         rect.h = 0;
         mwidth = 0;
         mheight = 0;
+
+        Camera[0].x = 0;
+        Camera[0].y = 0;
+        Camera[0].h = 495;
+        Camera[0].w = 990;
+
+        Camera[1].x = 0;
+        Camera[1].y = 0;
+        Camera[1].h = 495;
+        Camera[1].w = 990;
+
+        Camera[2].x = 0;
+        Camera[2].y = 0;
+        Camera[2].h = 495;
+        Camera[2].w = 990;
+
+        Camera[3].x = 0;
+        Camera[3].y = 0;
+        Camera[3].h = 495;
+        Camera[3].w = 990;
+
+        Camera[4].x = 0;
+        Camera[4].y = 0;
+        Camera[4].h = 495;
+        Camera[4].w = 990;
+
+        Camera[5].x = 0;
+        Camera[5].y = 0;
+        Camera[5].h = 495;
+        Camera[5].w = 990;
+        // ---------------------------------------------------------------------
+
+        Camera2[0].x = 990;
+        Camera2[0].y = 0;
+        Camera2[0].h = 495;
+        Camera2[0].w = 990;
+
+        Camera2[1].x = 990;
+        Camera2[1].y = 0;
+        Camera2[1].h = 495;
+        Camera2[1].w = 990;
+
+        Camera2[2].x = 990;
+        Camera2[2].y = 0;
+        Camera2[2].h = 495;
+        Camera2[2].w = 990;
+
+        Camera2[3].x = 990;
+        Camera2[3].y = 0;
+        Camera2[3].h = 495;
+        Camera2[3].w = 990;
+
+        Camera2[4].x = 990;
+        Camera2[4].y = 0;
+        Camera2[4].h = 495;
+        Camera2[4].w = 990;
+
+        Camera2[5].x = 990;
+        Camera2[5].y = 0;
+        Camera2[5].h = 495;
+        Camera2[5].w = 990;
+
+        back_groundSpeed[0] = BG1_speed;
+        back_groundSpeed[1] = BG2_speed;
+        back_groundSpeed[2] = BG3_speed;
+        back_groundSpeed[3] = BG4_speed;
+        back_groundSpeed[4] = BG5_speed;
+        back_groundSpeed[5] = GROUND_SPEED;
+
 }
 
 GameBase::~GameBase()
@@ -33,11 +102,28 @@ bool GameBase::loadIMG(std::string path, SDL_Renderer* screen)
     return p_object!=NULL;
 }
 
-void GameBase::Render(SDL_Renderer* des,  SDL_Rect* clip, SDL_Rect* renderquad)
+void GameBase::Render(SDL_Renderer* des, SDL_Rect* renderquad, int i)
 {
-    SDL_RenderCopy(des, p_object, clip, renderquad);
+    Camera[i].x = Camera[i].x - back_groundSpeed[i];
+    if(Camera[i].x < -990)
+            {
+                Camera[i].x = 0;
+            }
+    SDL_RenderCopy(des, p_object, renderquad, &Camera[i]);
 
 }
+
+void GameBase::Render2(SDL_Renderer* des2, SDL_Rect* renderquad2, int i)
+{
+    Camera2[i].x = Camera2[i].x - back_groundSpeed[i];
+    if(Camera2[i].x < 0)
+        {
+            Camera2[i].x = 990;
+        }
+    SDL_RenderCopy(des2, p_object, renderquad2, &Camera2[i]);
+
+}
+
 
 void GameBase::Free()
 {

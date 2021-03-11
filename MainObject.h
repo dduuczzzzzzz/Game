@@ -13,8 +13,8 @@ public:
     MainObject();
     ~MainObject();
 
-    static const int Jumpspeed = 25;
-    static const int Fallspeed = 25;
+    static const int Jumpspeed = 15;
+    static const int Fallspeed = 15;
 
     bool loadIMG(std::string path, SDL_Renderer* screen);
     void Show(SDL_Renderer* des);

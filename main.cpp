@@ -5,6 +5,7 @@
 #include "GameBase.h"
 #include "MainObject.h"
 #include "OtherHelpFunc.h"
+#include "Enemy.h"
 
 using namespace std;
 
@@ -14,10 +15,12 @@ const string LAYER[Background]={
         "Background/BG3.png",
         "Background/BG4.png",
         "Background/BG5.png",
+        "Background/BG6.png"
 };
 
+
 GameBase g_background[Background];
-GameBase g_Ground;
+//GameBase g_Ground;
 
 bool Init()
 {
@@ -53,10 +56,10 @@ bool loadBackground()
         {
             success = false;
         }
-        if(!g_Ground.loadIMG("Background/BG6.png", g_screen))
+        /*if(!g_Ground.loadIMG("Background/BG6.png", g_screen))
         {
             success = false;
-        }
+        }*/
     }
     return success;
 }
@@ -87,11 +90,17 @@ int main(int argc, char* argv[])
     {
         cout << "error" << endl;
     }
+
     MainObject p_player;
-    MainObject p_jump;
-    MainObject p_fall;
     p_player.loadIMG("sprites/run_1.png", g_screen);
     p_player.set_clips();
+
+    Enemy birds;
+    birds.loadIMG("enemy/birds.png", g_screen);
+    Enemy monster;
+    monster.loadIMG("enemy/monster.png", g_screen);
+    birds.set_clips_enemy();
+    monster.set_clips_enemy();
 
     Uint32 frameStart;
     int frameTime;
@@ -111,15 +120,22 @@ int main(int argc, char* argv[])
         frameStart = SDL_GetTicks();
 
         SDL_SetRenderDrawColor(g_screen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
+
+
         for(int i=0;i<Background;i++)
         {
-            g_background[i].Render(g_screen,NULL,NULL);
-        }
+            g_background[i].Render(g_screen,NULL,i);
+            g_background[i].Render2(g_screen,NULL,i);
+            //scrollBackground(Camera[i], back_groundSpeed);
 
-        g_Ground.Render(g_screen, NULL, NULL);
+        }
+        //g_Ground.Render(g_screen, NULL, NULL);
         p_player.Jumpp();
         p_player.Show(g_screen);
-
+        birds.Show_enemy(g_screen);
+        birds.Move();
+        monster.Show_enemy(g_screen);
+        monster.Move();
         SDL_RenderPresent(g_screen);
 
         frameTime = SDL_GetTicks() - frameStart;

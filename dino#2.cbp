@@ -38,6 +38,12 @@
 		<Unit filename="CommonFunc.h">
 			<Option target="Debug" />
 		</Unit>
+		<Unit filename="Enemy.cpp">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="Enemy.h">
+			<Option target="Debug" />
+		</Unit>
 		<Unit filename="GameBase.cpp">
 			<Option target="Debug" />
 		</Unit>
