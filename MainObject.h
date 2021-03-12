@@ -7,6 +7,7 @@
 #define FALL 2
 #define RUN 0
 
+
 class MainObject : public GameBase
 {
 public:
@@ -22,6 +23,8 @@ public:
     void set_clips();
     bool onGround();
     void Jumpp();
+    int getPosX();
+    int getPosY();
 
 private:
     float x_value;

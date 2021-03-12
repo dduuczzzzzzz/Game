@@ -131,3 +131,13 @@ void MainObject::Jumpp()
 
     }
 }
+
+int MainObject::getPosX()
+{
+   return x_pos_;
+}
+
+int MainObject::getPosY()
+{
+    return y_pos_;
+}

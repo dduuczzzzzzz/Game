@@ -7,6 +7,7 @@
 #include "CommonFunc.h"
 #include <string>
 
+
 class GameBase
 {
 public:
@@ -22,6 +23,7 @@ public:
     void Free();
     int getWidth();
     int getHeight();
+    bool checkCollision();
 
 protected:
     SDL_Texture* p_object;

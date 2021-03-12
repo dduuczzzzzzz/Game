@@ -50,6 +50,12 @@
 		<Unit filename="GameBase.h">
 			<Option target="Debug" />
 		</Unit>
+		<Unit filename="GameUltils.cpp">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="GameUltils.h">
+			<Option target="Debug" />
+		</Unit>
 		<Unit filename="MainObject.cpp">
 			<Option target="Debug" />
 		</Unit>
@@ -57,6 +63,12 @@
 			<Option target="Debug" />
 		</Unit>
 		<Unit filename="main.cpp" />
+		<Unit filename="onGroundEnemy.cpp">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="onGroundEnemy.h">
+			<Option target="Debug" />
+		</Unit>
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

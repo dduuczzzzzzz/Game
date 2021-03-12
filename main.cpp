@@ -4,8 +4,9 @@
 #include "CommonFunc.h"
 #include "GameBase.h"
 #include "MainObject.h"
-#include "OtherHelpFunc.h"
 #include "Enemy.h"
+#include "onGroundEnemy.h"
+#include "GameUltils.h"
 
 using namespace std;
 
@@ -90,17 +91,17 @@ int main(int argc, char* argv[])
     {
         cout << "error" << endl;
     }
-
+    srand(time(NULL));
     MainObject p_player;
     p_player.loadIMG("sprites/run_1.png", g_screen);
     p_player.set_clips();
 
-    Enemy birds;
-    birds.loadIMG("enemy/birds.png", g_screen);
-    Enemy monster;
-    monster.loadIMG("enemy/monster.png", g_screen);
-    birds.set_clips_enemy();
-    monster.set_clips_enemy();
+    Enemy enemy_;
+    enemy_.loadIMG("enemy/birds.png", g_screen);
+    enemy_.set_clips_enemy();
+    onGroundEnemy enemy2_;
+    enemy2_.loadIMG("enemy/slime.png", g_screen);
+    enemy2_.set_clips_enemy();
 
     Uint32 frameStart;
     int frameTime;
@@ -132,10 +133,10 @@ int main(int argc, char* argv[])
         //g_Ground.Render(g_screen, NULL, NULL);
         p_player.Jumpp();
         p_player.Show(g_screen);
-        birds.Show_enemy(g_screen);
-        birds.Move();
-        monster.Show_enemy(g_screen);
-        monster.Move();
+        enemy_.Show_enemy(g_screen);
+        enemy_.Move();
+        enemy2_.Show_enemy(g_screen);
+        enemy2_.Move();
         SDL_RenderPresent(g_screen);
 
         frameTime = SDL_GetTicks() - frameStart;
@@ -143,6 +144,11 @@ int main(int argc, char* argv[])
         {
             SDL_Delay(frameDelay - frameTime);
         }
+        /*if(check_collision(p_player,enemy_,enemy2_)==true)
+        {
+            //GameRunning = false;
+            cout << "LOSE" << endl;
+        }*/
     }
 
     close();

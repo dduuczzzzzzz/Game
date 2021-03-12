@@ -105,7 +105,7 @@ bool GameBase::loadIMG(std::string path, SDL_Renderer* screen)
 void GameBase::Render(SDL_Renderer* des, SDL_Rect* renderquad, int i)
 {
     Camera[i].x = Camera[i].x - back_groundSpeed[i];
-    if(Camera[i].x < -990)
+    if(Camera[i].x <= -990)
             {
                 Camera[i].x = 0;
             }
@@ -116,7 +116,7 @@ void GameBase::Render(SDL_Renderer* des, SDL_Rect* renderquad, int i)
 void GameBase::Render2(SDL_Renderer* des2, SDL_Rect* renderquad2, int i)
 {
     Camera2[i].x = Camera2[i].x - back_groundSpeed[i];
-    if(Camera2[i].x < 0)
+    if(Camera2[i].x <= 0)
         {
             Camera2[i].x = 990;
         }
@@ -144,4 +144,9 @@ int GameBase::getWidth()
 int GameBase::getHeight()
 {
     return mheight;
+}
+
+bool GameBase::checkCollision()
+{
+
 }
