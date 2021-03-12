@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
     p_player.set_clips();
 
     Enemy enemy_;
-    enemy_.loadIMG("enemy/birds.png", g_screen);
+    enemy_.loadIMG("enemy/bat.png", g_screen);
     enemy_.set_clips_enemy();
     onGroundEnemy enemy2_;
     enemy2_.loadIMG("enemy/slime.png", g_screen);
@@ -144,11 +144,29 @@ int main(int argc, char* argv[])
         {
             SDL_Delay(frameDelay - frameTime);
         }
-        /*if(check_collision(p_player,enemy_,enemy2_)==true)
+        //check collide
+        if(p_player.getPosX() + 30 - 17 >= enemy2_.getPos__X() && p_player.getPosX() +10  <= enemy2_.getPos__X() + 57)
         {
-            //GameRunning = false;
-            cout << "LOSE" << endl;
-        }*/
+            if(p_player.getPosY() + 15 >= enemy2_.getPos__Y())
+            {
+                GameRunning = false;
+                cout << "LOSE";
+            }
+        }
+        // trừ và cộng các vị trí đi 1 số đơn vị để hình ảnh va chạm trông thật hơn
+        else if(p_player.getPosX()+30 - 15 >= enemy_.getPos_X() && p_player.getPosX()+10 <= enemy_.getPos_X()+32 )
+        {
+            if(p_player.getPosY()-60>=enemy_.getPos_Y()-32 && p_player.getPosY()-60-45 <= enemy_.getPos_Y())
+            {
+                GameRunning = false;
+                cout << "LOSE" ;
+            }
+           /* if(p_player.getPosY()+45 -30 >= enemy_.getPos_Y()+32 -18 && p_player.getPosY()+45 -30 <= enemy_.getPos_Y())
+            {
+                GameRunning = false;
+                cout << "LOSE";
+            } */
+        }
     }
 
     close();

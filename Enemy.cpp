@@ -20,7 +20,7 @@ bool Enemy::loadIMG(std::string path, SDL_Renderer* screen)
     bool ret = GameBase::loadIMG(path, screen);
      if(ret == true)
         {
-            width_frame = rect.w / 8;
+            width_frame = rect.w / 5;
             height_frame = rect.h;
         }
 
@@ -55,7 +55,7 @@ void Enemy::set_clips_enemy()
             Enemy_frame_clips[4].w = width_frame;
             Enemy_frame_clips[4].h = height_frame;
 
-            Enemy_frame_clips[5].x = width_frame * 5;
+          /*  Enemy_frame_clips[5].x = width_frame * 5;
             Enemy_frame_clips[5].y = 0;
             Enemy_frame_clips[5].w = width_frame;
             Enemy_frame_clips[5].h = height_frame;
@@ -68,16 +68,16 @@ void Enemy::set_clips_enemy()
             Enemy_frame_clips[7].x = width_frame * 7;
             Enemy_frame_clips[7].y = 0;
             Enemy_frame_clips[7].w = width_frame;
-            Enemy_frame_clips[7].h = height_frame;
+            Enemy_frame_clips[7].h = height_frame;*/
     }
 }
 
 void Enemy::Show_enemy(SDL_Renderer* des)
 {   std::cout <<  x_birds_pos_ << std::endl;
 
-        loadIMG("enemy/birds.png", des);
+        loadIMG("enemy/bat.png", des);
         frame_num++;
-        if(frame_num>=8) frame_num = 0;
+        if(frame_num>=5) frame_num = 0;
 
         rect.x = x_birds_pos_;
         rect.y = y_birds_pos_;
@@ -93,7 +93,7 @@ void Enemy::Show_enemy(SDL_Renderer* des)
 
 void Enemy::Move()
 {
-    x_birds_pos_ = x_birds_pos_ -13;
+    x_birds_pos_ = x_birds_pos_ -8;
     if(x_birds_pos_ < 0) {x_birds_pos_ = rand()% ( 500) + SCREEN_WIDTH; }
 }
 

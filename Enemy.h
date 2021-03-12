@@ -30,7 +30,7 @@ private:
     int width_frame;
     int height_frame;
 
-    SDL_Rect Enemy_frame_clips[8];
+    SDL_Rect Enemy_frame_clips[5];
 
     int frame_num;
 };

@@ -30,8 +30,8 @@ const int frameDelay = 1000/FPS;
 #define GROUND 415
 
 //background speed
-#define GROUND_SPEED 7
-#define BG1_speed  3
+#define GROUND_SPEED 8
+#define BG1_speed  2
 #define BG2_speed  5
 #define BG3_speed  6
 #define BG4_speed  5.0
