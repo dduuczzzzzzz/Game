@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "onGroundEnemy.h"
 #include "GameUltils.h"
+#include "TextFunc.h"
 
 using namespace std;
 
@@ -23,6 +24,8 @@ const string LAYER[Background]={
 GameBase g_background[Background];
 GameBase g_Theme;
 GameBase g_menu;
+TTF_Font* font_score;
+
 
 bool Init()
 {
@@ -39,14 +42,22 @@ bool Init()
     else {g_screen = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_ACCELERATED);
 
     if(g_screen == NULL) {success = false;}
-    else {SDL_SetRenderDrawColor(g_screen, 255, 255, 255, 255);
+    else
+        {SDL_SetRenderDrawColor(g_screen, 255, 255, 255, 255);
         int IMGFlags = IMG_INIT_PNG;
         if(!(IMG_Init(IMGFlags) && IMGFlags))
             success = false;
+        }
+    if(TTF_Init() == -1)  {success = false;}
+    else {font_score = TTF_OpenFont("font/pixel.ttf",15);}
+    if(font_score == NULL)
+    {
+        success = false;
     }
-    }
+
     return success;
 
+}
 }
 
 bool loadBackground()
@@ -108,6 +119,10 @@ int main(int argc, char* argv[])
     enemy2_.loadIMG("enemy/slime.png", g_screen);
     enemy2_.set_clips_enemy();
 
+    //time
+    TextFunc score_game;
+    score_game.SetColor();
+
     Uint32 frameStart;
     int frameTime;
 
@@ -142,8 +157,8 @@ int main(int argc, char* argv[])
         enemy_.Move();
         enemy2_.Show_enemy(g_screen);
         enemy2_.Move();
-        SDL_RenderPresent(g_screen);
 
+        //FPS
         frameTime = SDL_GetTicks() - frameStart;
         if(frameDelay > frameTime)
         {
@@ -158,7 +173,7 @@ int main(int argc, char* argv[])
             }
         }
         // trừ và cộng các vị trí đi 1 số đơn vị để hình ảnh va chạm trông thật hơn
-        else if(p_player.getPosX()+30 -15 >= enemy_.getPos_X()+32 -18 && p_player.getPosX()  <= enemy_.getPos_X()+32 )
+        else if(p_player.getPosX()+30 - 15  >= enemy_.getPos_X() +32 - 18 && p_player.getPosX()   <= enemy_.getPos_X()+32 )
         {  //
             /*if(p_player.getPosY()<=enemy_.getPos_Y()+32-10 && p_player.getPosY() <= enemy_.getPos_Y()+7)
             {
@@ -184,6 +199,19 @@ int main(int argc, char* argv[])
                 enemy_.Pause1();
                 cout << "LOSE" ;
         }
+
+         //score game
+        std::string str_score = "Highscore: ";
+        Uint32 score_val = SDL_GetTicks() / 100;
+        std::string str_ = std::to_string(score_val);
+        if(collide == false)
+        {str_score += str_;}
+        score_game.SetText(str_score);
+        score_game.LoadFromRenderText(font_score, g_screen);
+        score_game.RenderText(g_screen, SCREEN_WIDTH - 200, 15);
+
+        SDL_RenderPresent(g_screen);
+
     }
 
     close();
