@@ -4,11 +4,12 @@ Enemy::Enemy()
 {
     frame_num = 0;
     x_birds_pos_ = rand()% (SCREEN_WIDTH+500) + SCREEN_WIDTH;
-    y_birds_pos_ = 350;
+    y_birds_pos_ = 340;
     x_value= 0;
     width_frame = 0;
     height_frame = 0;
     //status = rand() % (1);
+    pause = false;
 }
 Enemy::~Enemy()
 {
@@ -73,11 +74,13 @@ void Enemy::set_clips_enemy()
 }
 
 void Enemy::Show_enemy(SDL_Renderer* des)
-{   std::cout <<  x_birds_pos_ << std::endl;
-
+{
+    if(pause == false)
+    {
         loadIMG("enemy/bat.png", des);
         frame_num++;
         if(frame_num>=5) frame_num = 0;
+    }
 
         rect.x = x_birds_pos_;
         rect.y = y_birds_pos_;
@@ -92,9 +95,11 @@ void Enemy::Show_enemy(SDL_Renderer* des)
 }
 
 void Enemy::Move()
-{
+{   if(pause == false)
+    {
     x_birds_pos_ = x_birds_pos_ -8;
     if(x_birds_pos_ < 0) {x_birds_pos_ = rand()% ( 500) + SCREEN_WIDTH; }
+    }
 }
 
 int Enemy::getPos_X()
@@ -105,4 +110,9 @@ int Enemy::getPos_X()
 int Enemy::getPos_Y()
 {
     return y_birds_pos_;
+}
+
+void Enemy::Pause1()
+{
+    pause = true;
 }

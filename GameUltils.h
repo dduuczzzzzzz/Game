@@ -6,7 +6,8 @@
 #include "Enemy.h"
 #include "onGroundEnemy.h"
 
-bool check_collision(MainObject player, Enemy birds, onGroundEnemy dino);
+bool check_collision(MainObject p_player, Enemy enemy_, onGroundEnemy enemy2_);
+//bool check_coolide(MainObject p_player, Enemy enemy_, onGroundEnemy enemy2_);
 
 
 #endif // GAMEULTILS_H_INCLUDED

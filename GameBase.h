@@ -18,12 +18,14 @@ public:
     SDL_Texture* GetObject() const {return p_object;}
 
     virtual bool loadIMG(std::string path, SDL_Renderer* screen);
-    void Render(SDL_Renderer* des, SDL_Rect* renderquad, int i);
-    void Render2(SDL_Renderer* des2, SDL_Rect* renderquad2, int i);
+    void Render(SDL_Renderer* des, SDL_Rect* rectt, int i);
+    void Render2(SDL_Renderer* des2, SDL_Rect* rectt2, int i);
+    void Render3(SDL_Renderer* des3, SDL_Rect* rect3, SDL_Rect* rect4);
     void Free();
     int getWidth();
     int getHeight();
     bool checkCollision();
+    double back_groundSpeed[6];
 
 protected:
     SDL_Texture* p_object;
@@ -32,7 +34,7 @@ protected:
     SDL_Rect rect;
     SDL_Rect Camera[6];
     SDL_Rect Camera2[6];
-    double back_groundSpeed[6];
+
 
 };
 

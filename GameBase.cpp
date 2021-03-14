@@ -102,28 +102,32 @@ bool GameBase::loadIMG(std::string path, SDL_Renderer* screen)
     return p_object!=NULL;
 }
 
-void GameBase::Render(SDL_Renderer* des, SDL_Rect* renderquad, int i)
+void GameBase::Render(SDL_Renderer* des, SDL_Rect* rectt, int i)
 {
     Camera[i].x = Camera[i].x - back_groundSpeed[i];
     if(Camera[i].x <= -990)
             {
                 Camera[i].x = 0;
             }
-    SDL_RenderCopy(des, p_object, renderquad, &Camera[i]);
+    SDL_RenderCopy(des, p_object, rectt, &Camera[i]);
 
 }
 
-void GameBase::Render2(SDL_Renderer* des2, SDL_Rect* renderquad2, int i)
+void GameBase::Render2(SDL_Renderer* des2, SDL_Rect* rectt2, int i)
 {
     Camera2[i].x = Camera2[i].x - back_groundSpeed[i];
     if(Camera2[i].x <= 0)
         {
             Camera2[i].x = 990;
         }
-    SDL_RenderCopy(des2, p_object, renderquad2, &Camera2[i]);
+    SDL_RenderCopy(des2, p_object, rectt2, &Camera2[i]);
 
 }
 
+void GameBase::Render3(SDL_Renderer* des3, SDL_Rect* rect3, SDL_Rect* rect4)
+{
+    SDL_RenderCopy(des3 , p_object, rect3, rect4);
+}
 
 void GameBase::Free()
 {

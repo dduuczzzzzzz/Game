@@ -18,6 +18,7 @@ public:
     void Move();
     int getPos__X();
     int getPos__Y();
+    void Pause2();
 
 private:
     float x_value;
@@ -32,6 +33,7 @@ private:
     SDL_Rect Enemy2_frame_clips[8];
 
     int frame_num;
+    bool pause;
 };
 
 #endif // ONGROUNDENEMY_H_INCLUDED

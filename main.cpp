@@ -21,7 +21,8 @@ const string LAYER[Background]={
 
 
 GameBase g_background[Background];
-//GameBase g_Ground;
+GameBase g_Theme;
+GameBase g_menu;
 
 bool Init()
 {
@@ -62,6 +63,7 @@ bool loadBackground()
             success = false;
         }*/
     }
+    g_Theme.loadIMG("Background/theme.png", g_screen);
     return success;
 }
 
@@ -71,6 +73,7 @@ void close()
     {
         g_background[i].Free();
     }
+    g_Theme.Free();
     SDL_DestroyRenderer(g_screen);
     g_screen = NULL;
 
@@ -80,6 +83,8 @@ void close()
     IMG_Quit();
     SDL_Quit();
 }
+
+bool check_coolide(MainObject p_player, Enemy enemy_, onGroundEnemy enemy2_);
 
 int main(int argc, char* argv[])
 {
@@ -106,6 +111,7 @@ int main(int argc, char* argv[])
     Uint32 frameStart;
     int frameTime;
 
+    bool collide;
     bool GameRunning = true;
     while(GameRunning)
     {
@@ -127,10 +133,9 @@ int main(int argc, char* argv[])
         {
             g_background[i].Render(g_screen,NULL,i);
             g_background[i].Render2(g_screen,NULL,i);
-            //scrollBackground(Camera[i], back_groundSpeed);
 
         }
-        //g_Ground.Render(g_screen, NULL, NULL);
+       // g_Theme.Render3(g_screen,NULL,NULL);
         p_player.Jumpp();
         p_player.Show(g_screen);
         enemy_.Show_enemy(g_screen);
@@ -145,30 +150,77 @@ int main(int argc, char* argv[])
             SDL_Delay(frameDelay - frameTime);
         }
         //check collide
-        if(p_player.getPosX() + 30 - 17 >= enemy2_.getPos__X() && p_player.getPosX() +10  <= enemy2_.getPos__X() + 57)
+        if(p_player.getPosX() + 30 -16 >= enemy2_.getPos__X() && p_player.getPosX() + 12  <= enemy2_.getPos__X() + 57)
         {
-            if(p_player.getPosY() + 15 >= enemy2_.getPos__Y())
+            if(p_player.getPosY() + 15>= enemy2_.getPos__Y())
             {
-                GameRunning = false;
-                cout << "LOSE";
+                collide =  true;
             }
         }
         // trừ và cộng các vị trí đi 1 số đơn vị để hình ảnh va chạm trông thật hơn
-        else if(p_player.getPosX()+30 - 15 >= enemy_.getPos_X() && p_player.getPosX()+10 <= enemy_.getPos_X()+32 )
-        {
-            if(p_player.getPosY()-60>=enemy_.getPos_Y()-32 && p_player.getPosY()-60-45 <= enemy_.getPos_Y())
+        else if(p_player.getPosX()+30 -15 >= enemy_.getPos_X()+32 -18 && p_player.getPosX()  <= enemy_.getPos_X()+32 )
+        {  //
+            /*if(p_player.getPosY()<=enemy_.getPos_Y()+32-10 && p_player.getPosY() <= enemy_.getPos_Y()+7)
             {
-                GameRunning = false;
+                //GameRunning = false;
+                for(int i=0;i <Background;i++)
+                g_background[i].back_groundSpeed[i] = 0;
+                p_player.Pausee();
+                enemy2_.Pause2();
+                enemy_.Pause1();
                 cout << "LOSE" ;
-            }
-           /* if(p_player.getPosY()+45 -30 >= enemy_.getPos_Y()+32 -18 && p_player.getPosY()+45 -30 <= enemy_.getPos_Y())
+            }*/
+            if(p_player.getPosY()+45 <= enemy_.getPos_Y()+32 +15&& p_player.getPosY()+45  >= enemy_.getPos_Y()+15)
             {
-                GameRunning = false;
-                cout << "LOSE";
-            } */
+                collide =  true;
+            }
+        }
+        if(collide == true)
+        {
+            for(int i=0;i <Background;i++)
+                g_background[i].back_groundSpeed[i] = 0;
+                p_player.Pausee();
+                enemy2_.Pause2();
+                enemy_.Pause1();
+                cout << "LOSE" ;
         }
     }
 
     close();
     return 0;
 }
+
+bool check_coolide(MainObject p_player, Enemy enemy_, onGroundEnemy enemy2_)
+{
+    //check collide
+        if(p_player.getPosX() + 30 -16 >= enemy2_.getPos__X() && p_player.getPosX() + 12  <= enemy2_.getPos__X() + 57)
+        {
+            if(p_player.getPosY() + 15>= enemy2_.getPos__Y())
+            {
+                //GameRunning = false;
+
+                return true;
+            }
+        }
+        // trừ và cộng các vị trí đi 1 số đơn vị để hình ảnh va chạm trông thật hơn
+        else if(p_player.getPosX()+30 -15 >= enemy_.getPos_X()+32 -18 && p_player.getPosX()  <= enemy_.getPos_X()+32 )
+        {  //
+            /*if(p_player.getPosY()<=enemy_.getPos_Y()+32-10 && p_player.getPosY() <= enemy_.getPos_Y()+7)
+            {
+                //GameRunning = false;
+                for(int i=0;i <Background;i++)
+                g_background[i].back_groundSpeed[i] = 0;
+                p_player.Pausee();
+                enemy2_.Pause2();
+                enemy_.Pause1();
+                cout << "LOSE" ;
+            }*/
+            if(p_player.getPosY()+45 <= enemy_.getPos_Y()+32 +15&& p_player.getPosY()+45  >= enemy_.getPos_Y()+15)
+            {
+                //GameRunning = false;
+
+                return true;
+            }
+        }
+}
+

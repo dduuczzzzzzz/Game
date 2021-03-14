@@ -10,6 +10,7 @@ MainObject::MainObject()
     width_frame = 0;
     height_frame = 0;
     status = -1;
+    pause = false;
 }
 
 MainObject::~MainObject()
@@ -81,7 +82,7 @@ void MainObject::set_clips()
 
 void MainObject::Show(SDL_Renderer* des)
 {
-    if(onGround() == true)
+    if(onGround() == true && pause == false)
     {
         loadIMG("sprites/run_1.png", des);
         frame_num++;
@@ -117,11 +118,11 @@ void MainObject::HandleAction(SDL_Event events, SDL_Renderer* screen)
 }
 void MainObject::Jumpp()
 {
-    if(status == JUMP && y_pos_ >= 240)
+    if(status == JUMP && y_pos_ >= 260)
     {
         y_pos_+= -Jumpspeed;
     }
-    if(y_pos_ <= 240)
+    if(y_pos_ <= 260)
     {
         status = FALL;
     }
@@ -140,4 +141,11 @@ int MainObject::getPosX()
 int MainObject::getPosY()
 {
     return y_pos_;
+}
+
+void MainObject::Pausee()
+{
+    Jumpspeed = 0;
+    Fallspeed = 0;
+    pause = true;
 }

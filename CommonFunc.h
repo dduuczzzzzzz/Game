@@ -36,4 +36,12 @@ const int frameDelay = 1000/FPS;
 #define BG3_speed  6
 #define BG4_speed  5.0
 #define BG5_speed  7
+
+#define player_height 45
+#define player_width 30
+#define bat_height 32
+#define bat_width 32
+#define slime_height 57
+#define slime_width 57
+
 #endif // COMMONFUNC_H_INCLUDED

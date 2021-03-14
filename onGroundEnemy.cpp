@@ -9,7 +9,7 @@ onGroundEnemy::onGroundEnemy()
     width_frame = 0;
     height_frame = 0;
     //status = rand() % (1);
-
+    pause = false;
 }
 onGroundEnemy::~onGroundEnemy()
 {
@@ -76,10 +76,12 @@ void onGroundEnemy::set_clips_enemy()
 }
 
 void onGroundEnemy::Show_enemy(SDL_Renderer* des)
-{   std::cout <<  x_cactus_pos_ << std::endl;
+{
+    if(pause == false){
         loadIMG("enemy/slime.png", des);
         frame_num++;
         if(frame_num>=6) frame_num=0;
+    }
         rect.x = x_cactus_pos_;
         rect.y = y_cactus_pos_;
 
@@ -92,9 +94,11 @@ void onGroundEnemy::Show_enemy(SDL_Renderer* des)
 }
 
 void onGroundEnemy::Move()
-{
-    x_cactus_pos_ = x_cactus_pos_ -11;
-    if(x_cactus_pos_ < 0) {x_cactus_pos_ = rand()% (300) + SCREEN_WIDTH; }
+{ if(pause == false)
+    {
+        x_cactus_pos_ = x_cactus_pos_ -11;
+        if(x_cactus_pos_ < 0) {x_cactus_pos_ = rand()% (300) + SCREEN_WIDTH; }
+    }
 }
 
 int onGroundEnemy::getPos__X()
@@ -105,4 +109,9 @@ int onGroundEnemy::getPos__X()
 int onGroundEnemy::getPos__Y()
 {
     return y_cactus_pos_;
+}
+
+void onGroundEnemy::Pause2()
+{
+    pause = true;
 }

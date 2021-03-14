@@ -62,6 +62,12 @@
 		<Unit filename="MainObject.h">
 			<Option target="Debug" />
 		</Unit>
+		<Unit filename="TextFunc.cpp">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="TextFunc.h">
+			<Option target="Debug" />
+		</Unit>
 		<Unit filename="main.cpp" />
 		<Unit filename="onGroundEnemy.cpp">
 			<Option target="Debug" />

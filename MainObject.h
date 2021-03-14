@@ -14,8 +14,8 @@ public:
     MainObject();
     ~MainObject();
 
-    static const int Jumpspeed = 15;
-    static const int Fallspeed = 15;
+    /*static const */int Jumpspeed = 15;
+    /*static const */int Fallspeed = 15;
 
     bool loadIMG(std::string path, SDL_Renderer* screen);
     void Show(SDL_Renderer* des);
@@ -25,6 +25,7 @@ public:
     void Jumpp();
     int getPosX();
     int getPosY();
+    void Pausee();
 
 private:
     float x_value;
@@ -40,6 +41,7 @@ private:
 
     int frame_num;
     int status;
+    bool pause;
 };
 
 

@@ -19,6 +19,7 @@ public:
     void Move();
     int getPos_X();
     int getPos_Y();
+    void Pause1();
 
 private:
     float x_value;
@@ -33,6 +34,7 @@ private:
     SDL_Rect Enemy_frame_clips[5];
 
     int frame_num;
+    bool pause;
 };
 
 
