@@ -201,14 +201,21 @@ int main(int argc, char* argv[])
         }
 
          //score game
-        std::string str_score = "Highscore: ";
+        std::string str_score = "Score: ";
+        std::string str_highscore = "HighScore: ";
         Uint32 score_val = SDL_GetTicks() / 100;
         std::string str_ = std::to_string(score_val);
         if(collide == false)
-        {str_score += str_;}
+        {str_score += str_;
+         str_highscore = str_score;
+        }
         score_game.SetText(str_score);
         score_game.LoadFromRenderText(font_score, g_screen);
         score_game.RenderText(g_screen, SCREEN_WIDTH - 200, 15);
+
+        score_game.SetText(str_highscore);
+        score_game.LoadFromRenderText(font_score, g_screen);
+        score_game.RenderText(g_screen, SCREEN_WIDTH - 200, 45);
 
         SDL_RenderPresent(g_screen);
 
