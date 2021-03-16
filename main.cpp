@@ -69,12 +69,7 @@ bool loadBackground()
         {
             success = false;
         }
-        /*if(!g_Ground.loadIMG("Background/BG6.png", g_screen))
-        {
-            success = false;
-        }*/
     }
-    g_Theme.loadIMG("Background/theme.png", g_screen);
     return success;
 }
 
@@ -84,7 +79,6 @@ void close()
     {
         g_background[i].Free();
     }
-    g_Theme.Free();
     SDL_DestroyRenderer(g_screen);
     g_screen = NULL;
 
@@ -101,13 +95,21 @@ int main(int argc, char* argv[])
 {
     if(Init()==false)
     {
-        cout << "error" << endl;
+        cout << "error -- 1" << endl;
     }
     if(loadBackground()==false)
     {
-        cout << "error" << endl;
+        cout << "error -- 2" << endl;
     }
     srand(time(NULL));
+    bool GameRunning = true;
+
+    TextFunc Menu_game;
+    Menu_game.SetColor();
+
+    SDL_RenderPresent(g_screen);
+
+    // nhan vat va quai
     MainObject p_player;
     p_player.loadIMG("sprites/run_1.png", g_screen);
     p_player.set_clips();
@@ -126,65 +128,59 @@ int main(int argc, char* argv[])
     Uint32 frameStart;
     int frameTime;
 
-    bool collide;
-    bool GameRunning = true;
+    bool collide = false;
     while(GameRunning)
     {
         while(SDL_PollEvent(&g_event)!= 0)
         {
             if(g_event.type == SDL_QUIT)
+                {
+                    GameRunning = false;
+                }
+                p_player.HandleAction(g_event , g_screen);
+        }
+            frameStart = SDL_GetTicks();
+
+            SDL_SetRenderDrawColor(g_screen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
+
+
+            for(int i=0;i<Background;i++)
             {
-                GameRunning = false;
+                g_background[i].Render(g_screen,NULL,i);
+                g_background[i].Render2(g_screen,NULL,i);
+
             }
-            p_player.HandleAction(g_event , g_screen);
-        }
 
-        frameStart = SDL_GetTicks();
+            std::string Menu_str_ = "Press Backspace to start game,  ESC to quit, when play , press the up key to jump!";
+            Menu_game.SetText(Menu_str_);
+            Menu_game.LoadFromRenderText(font_score,g_screen);
+            Menu_game.RenderText(g_screen,SCREEN_WIDTH-870, 200);
 
-        SDL_SetRenderDrawColor(g_screen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
+           // g_Theme.Render3(g_screen,NULL,NULL);
+            p_player.Jumpp();
+            p_player.Show(g_screen);
+            enemy_.Show_enemy(g_screen);
+            enemy_.Move();
+            enemy2_.Show_enemy(g_screen);
+            enemy2_.Move();
 
-
-        for(int i=0;i<Background;i++)
-        {
-            g_background[i].Render(g_screen,NULL,i);
-            g_background[i].Render2(g_screen,NULL,i);
-
-        }
-       // g_Theme.Render3(g_screen,NULL,NULL);
-        p_player.Jumpp();
-        p_player.Show(g_screen);
-        enemy_.Show_enemy(g_screen);
-        enemy_.Move();
-        enemy2_.Show_enemy(g_screen);
-        enemy2_.Move();
-
-        //FPS
-        frameTime = SDL_GetTicks() - frameStart;
-        if(frameDelay > frameTime)
-        {
-            SDL_Delay(frameDelay - frameTime);
-        }
-        //check collide
-        if(p_player.getPosX() + 30 -16 >= enemy2_.getPos__X() && p_player.getPosX() + 12  <= enemy2_.getPos__X() + 57)
-        {
-            if(p_player.getPosY() + 15>= enemy2_.getPos__Y())
+            //FPS
+            frameTime = SDL_GetTicks() - frameStart;
+            if(frameDelay > frameTime)
             {
-                collide =  true;
+                SDL_Delay(frameDelay - frameTime);
             }
-        }
-        // trừ và cộng các vị trí đi 1 số đơn vị để hình ảnh va chạm trông thật hơn
-        else if(p_player.getPosX()+30 - 15  >= enemy_.getPos_X() +32 - 18 && p_player.getPosX()   <= enemy_.getPos_X()+32 )
-        {  //
-            /*if(p_player.getPosY()<=enemy_.getPos_Y()+32-10 && p_player.getPosY() <= enemy_.getPos_Y()+7)
+            //check collide
+            if(p_player.getPosX() + 30 -16 >= enemy2_.getPos__X() && p_player.getPosX() + 12  <= enemy2_.getPos__X() + 57)
             {
-                //GameRunning = false;
-                for(int i=0;i <Background;i++)
-                g_background[i].back_groundSpeed[i] = 0;
-                p_player.Pausee();
-                enemy2_.Pause2();
-                enemy_.Pause1();
-                cout << "LOSE" ;
-            }*/
+                if(p_player.getPosY() + 15>= enemy2_.getPos__Y())
+                {
+                    collide =  true;
+                }
+            }
+            // trừ và cộng các vị trí đi 1 số đơn vị để hình ảnh va chạm trông thật hơn
+            else if(p_player.getPosX()+30 - 15  >= enemy_.getPos_X() +32 - 18 && p_player.getPosX()   <= enemy_.getPos_X()+32 )
+            {
             if(p_player.getPosY()+45 <= enemy_.getPos_Y()+32 +15&& p_player.getPosY()+45  >= enemy_.getPos_Y()+15)
             {
                 collide =  true;
@@ -193,21 +189,22 @@ int main(int argc, char* argv[])
         if(collide == true)
         {
             for(int i=0;i <Background;i++)
-                g_background[i].back_groundSpeed[i] = 0;
-                p_player.Pausee();
-                enemy2_.Pause2();
-                enemy_.Pause1();
-                cout << "LOSE" ;
+            g_background[i].back_groundSpeed[i] = 0;
+            p_player.Pausee();
+            enemy2_.Pause2();
+            enemy_.Pause1();
+            cout << "LOSE" ;
         }
 
-         //score game
+            //score game
         std::string str_score = "Score: ";
         std::string str_highscore = "HighScore: ";
         Uint32 score_val = SDL_GetTicks() / 100;
         std::string str_ = std::to_string(score_val);
         if(collide == false)
-        {str_score += str_;
-         str_highscore = str_score;
+        {
+            str_score += str_;
+            str_highscore += str_ ;
         }
         score_game.SetText(str_score);
         score_game.LoadFromRenderText(font_score, g_screen);
@@ -239,17 +236,7 @@ bool check_coolide(MainObject p_player, Enemy enemy_, onGroundEnemy enemy2_)
         }
         // trừ và cộng các vị trí đi 1 số đơn vị để hình ảnh va chạm trông thật hơn
         else if(p_player.getPosX()+30 -15 >= enemy_.getPos_X()+32 -18 && p_player.getPosX()  <= enemy_.getPos_X()+32 )
-        {  //
-            /*if(p_player.getPosY()<=enemy_.getPos_Y()+32-10 && p_player.getPosY() <= enemy_.getPos_Y()+7)
-            {
-                //GameRunning = false;
-                for(int i=0;i <Background;i++)
-                g_background[i].back_groundSpeed[i] = 0;
-                p_player.Pausee();
-                enemy2_.Pause2();
-                enemy_.Pause1();
-                cout << "LOSE" ;
-            }*/
+        {
             if(p_player.getPosY()+45 <= enemy_.getPos_Y()+32 +15&& p_player.getPosY()+45  >= enemy_.getPos_Y()+15)
             {
                 //GameRunning = false;
