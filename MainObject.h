@@ -19,7 +19,7 @@ public:
 
     bool loadIMG(std::string path, SDL_Renderer* screen);
     void Show(SDL_Renderer* des);
-    void HandleAction(SDL_Event events, SDL_Renderer* screen);
+    void HandleAction(SDL_Event events/*, SDL_Renderer* screen*/);
     void set_clips();
     bool onGround();
     void Jumpp();

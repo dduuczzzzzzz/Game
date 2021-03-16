@@ -99,7 +99,7 @@ void MainObject::Show(SDL_Renderer* des)
     SDL_RenderCopy(des, p_object, current_clip, &renderQuad);
 }
 
-void MainObject::HandleAction(SDL_Event events, SDL_Renderer* screen)
+void MainObject::HandleAction(SDL_Event events/*, SDL_Renderer* screen*/)
 {
 
 	if (events.type == SDL_KEYDOWN && events.key.repeat == 0)

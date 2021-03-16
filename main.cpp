@@ -129,20 +129,21 @@ int main(int argc, char* argv[])
     int frameTime;
 
     bool collide = false;
+    bool Menu = true;
     while(GameRunning)
     {
-        while(SDL_PollEvent(&g_event)!= 0)
-        {
-            if(g_event.type == SDL_QUIT)
-                {
-                    GameRunning = false;
-                }
-                p_player.HandleAction(g_event , g_screen);
-        }
+            while(SDL_PollEvent(&g_event)!= 0)
+            {
+                if(g_event.type == SDL_QUIT)
+                    {
+                        GameRunning = false;
+                    }
+
+            }
+
             frameStart = SDL_GetTicks();
 
             SDL_SetRenderDrawColor(g_screen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
-
 
             for(int i=0;i<Background;i++)
             {
@@ -151,18 +152,46 @@ int main(int argc, char* argv[])
 
             }
 
-            std::string Menu_str_ = "Press Backspace to start game,  ESC to quit, when play , press the up key to jump!";
-            Menu_game.SetText(Menu_str_);
-            Menu_game.LoadFromRenderText(font_score,g_screen);
-            Menu_game.RenderText(g_screen,SCREEN_WIDTH-870, 200);
-
            // g_Theme.Render3(g_screen,NULL,NULL);
+
+            if(Menu == true)
+            {
+                p_player.Pausee();
+                enemy2_.Pause2();
+                enemy_.Pause1();
+                for(int i=0;i <Background;i++)
+                g_background[i].back_groundSpeed[i] = 0;
+                std::string Menu_str_ = "Press Backspace to start game,  ESC to quit, when play , press the up key to jump!";
+                Menu_game.SetText(Menu_str_);
+                Menu_game.LoadFromRenderText(font_score,g_screen);
+                Menu_game.RenderText(g_screen,SCREEN_WIDTH-870, 200);
+                if (g_event.type == SDL_KEYDOWN && g_event.key.repeat == 0)
+                    {
+                        switch (g_event.key.keysym.sym)
+                        {
+                            case SDLK_BACKSPACE:
+                            {
+                                Menu = false;
+                            }
+                            break;
+                            case SDLK_ESCAPE:
+                            {
+                                 GameRunning = false;
+                            }
+
+                        }
+                    }
+            }
+
             p_player.Jumpp();
             p_player.Show(g_screen);
+            p_player.HandleAction(g_event /*, g_screen*/);
+
             enemy_.Show_enemy(g_screen);
             enemy_.Move();
             enemy2_.Show_enemy(g_screen);
             enemy2_.Move();
+
 
             //FPS
             frameTime = SDL_GetTicks() - frameStart;
@@ -193,28 +222,24 @@ int main(int argc, char* argv[])
             p_player.Pausee();
             enemy2_.Pause2();
             enemy_.Pause1();
-            cout << "LOSE" ;
         }
 
-            //score game
-        std::string str_score = "Score: ";
-        std::string str_highscore = "HighScore: ";
-        Uint32 score_val = SDL_GetTicks() / 100;
-        std::string str_ = std::to_string(score_val);
-        if(collide == false)
-        {
-            str_score += str_;
-            str_highscore += str_ ;
-        }
-        score_game.SetText(str_score);
-        score_game.LoadFromRenderText(font_score, g_screen);
-        score_game.RenderText(g_screen, SCREEN_WIDTH - 200, 15);
+        //score game
+        //if(Menu == false)
+        //{
+            std::string str_score = "Score: ";
+            Uint32 score_val = SDL_GetTicks() / 100;
+            std::string str_ = std::to_string(score_val);
+            if(collide == false)
+            {
+                str_score += str_;
+            }
+            score_game.SetText(str_score);
+            score_game.LoadFromRenderText(font_score, g_screen);
+            score_game.RenderText(g_screen, SCREEN_WIDTH - 200, 15);
 
-        score_game.SetText(str_highscore);
-        score_game.LoadFromRenderText(font_score, g_screen);
-        score_game.RenderText(g_screen, SCREEN_WIDTH - 200, 45);
-
-        SDL_RenderPresent(g_screen);
+            SDL_RenderPresent(g_screen);
+        //}
 
     }
 
