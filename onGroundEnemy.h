@@ -19,6 +19,7 @@ public:
     int getPos__X();
     int getPos__Y();
     void Pause2();
+    void increase_speed2(Uint32 time_);
 
 private:
     float x_value;
@@ -34,6 +35,7 @@ private:
 
     int frame_num;
     bool pause;
+    int slime_speed;
 };
 
 #endif // ONGROUNDENEMY_H_INCLUDED

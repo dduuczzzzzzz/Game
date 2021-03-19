@@ -10,6 +10,7 @@ Enemy::Enemy()
     height_frame = 0;
     //status = rand() % (1);
     pause = false;
+    enemy_speed = 8;
 }
 Enemy::~Enemy()
 {
@@ -97,7 +98,7 @@ void Enemy::Show_enemy(SDL_Renderer* des)
 void Enemy::Move()
 {   if(pause == false)
     {
-    x_birds_pos_ = x_birds_pos_ -8;
+    x_birds_pos_ = x_birds_pos_ - enemy_speed;
     if(x_birds_pos_ < 0) {x_birds_pos_ = rand()% ( 500) + SCREEN_WIDTH; }
     }
 }
@@ -115,4 +116,12 @@ int Enemy::getPos_Y()
 void Enemy::Pause1()
 {
     pause = true;
+}
+
+void Enemy::increase_speed(Uint32 time_)
+{
+    if(time_ % 150 == 0)
+    {
+        enemy_speed = enemy_speed + speed_accelerate;
+    }
 }

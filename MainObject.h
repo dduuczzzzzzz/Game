@@ -27,6 +27,7 @@ public:
     int getPosY();
     void Pausee();
 
+
 private:
     float x_value;
     float y_value;

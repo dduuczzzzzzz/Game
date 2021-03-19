@@ -10,6 +10,7 @@ onGroundEnemy::onGroundEnemy()
     height_frame = 0;
     //status = rand() % (1);
     pause = false;
+    slime_speed = 11;
 }
 onGroundEnemy::~onGroundEnemy()
 {
@@ -96,7 +97,7 @@ void onGroundEnemy::Show_enemy(SDL_Renderer* des)
 void onGroundEnemy::Move()
 { if(pause == false)
     {
-        x_cactus_pos_ = x_cactus_pos_ -11;
+        x_cactus_pos_ = x_cactus_pos_ - slime_speed;
         if(x_cactus_pos_ < 0) {x_cactus_pos_ = rand()% (300) + SCREEN_WIDTH; }
     }
 }
@@ -114,4 +115,12 @@ int onGroundEnemy::getPos__Y()
 void onGroundEnemy::Pause2()
 {
     pause = true;
+}
+
+void onGroundEnemy::increase_speed2(Uint32 time_)
+{
+    if(time_ % 150 == 0)
+    {
+        slime_speed = slime_speed + speed_accelerate;
+    }
 }

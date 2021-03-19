@@ -20,6 +20,7 @@ public:
     int getPos_X();
     int getPos_Y();
     void Pause1();
+    void increase_speed(Uint32 time_);
 
 private:
     float x_value;
@@ -35,6 +36,7 @@ private:
 
     int frame_num;
     bool pause;
+    int enemy_speed ;
 };
 
 

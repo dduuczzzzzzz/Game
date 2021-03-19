@@ -26,6 +26,7 @@ public:
     int getHeight();
     bool checkCollision();
     double back_groundSpeed[6];
+    void increase_background_speed(Uint32 time_);
 
 protected:
     SDL_Texture* p_object;

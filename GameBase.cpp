@@ -154,3 +154,14 @@ bool GameBase::checkCollision()
 {
 
 }
+
+void GameBase::increase_background_speed(Uint32 time_)
+{
+    if(time_ % 150 == 0)
+    {
+        for(int i=0; i<Background; i++)
+        {
+            back_groundSpeed[i] += speed_accelerate;
+        }
+    }
+}

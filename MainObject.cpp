@@ -118,11 +118,11 @@ void MainObject::HandleAction(SDL_Event events/*, SDL_Renderer* screen*/)
 }
 void MainObject::Jumpp()
 {
-    if(status == JUMP && y_pos_ >= 260)
+    if(status == JUMP && y_pos_ >= 250)
     {
         y_pos_+= -Jumpspeed;
     }
-    if(y_pos_ <= 260)
+    if(y_pos_ <= 250)
     {
         status = FALL;
     }
@@ -149,3 +149,4 @@ void MainObject::Pausee()
     Fallspeed = 0;
     pause = true;
 }
+

@@ -70,6 +70,10 @@ bool loadBackground()
             success = false;
         }
     }
+    if (!g_Theme.loadIMG("background/theme.png",g_screen))
+    {
+        success = false;
+    }
     return success;
 }
 
@@ -127,6 +131,7 @@ int main(int argc, char* argv[])
 
     Uint32 frameStart;
     int frameTime;
+    Uint32 current_time;
 
     bool collide = false;
     bool Menu = true;
@@ -145,31 +150,20 @@ int main(int argc, char* argv[])
 
             SDL_SetRenderDrawColor(g_screen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
 
-            for(int i=0;i<Background;i++)
+
+           if(Menu == true)
             {
-                g_background[i].Render(g_screen,NULL,i);
-                g_background[i].Render2(g_screen,NULL,i);
-
-            }
-
-           // g_Theme.Render3(g_screen,NULL,NULL);
-
-            if(Menu == true)
-            {
-                p_player.Pausee();
-                enemy2_.Pause2();
-                enemy_.Pause1();
-                for(int i=0;i <Background;i++)
-                g_background[i].back_groundSpeed[i] = 0;
-                std::string Menu_str_ = "Press Backspace to start game,  ESC to quit, when play , press the up key to jump!";
+                current_time = SDL_GetTicks() / 100;
+                g_Theme.Render3(g_screen,NULL,NULL);
+                std::string Menu_str_ = "PRESS KEY UP TO START GAME,  ESC TO QUIT, WHEN PLAY, PRESS THE KEY UP TO JUMP!";
                 Menu_game.SetText(Menu_str_);
                 Menu_game.LoadFromRenderText(font_score,g_screen);
-                Menu_game.RenderText(g_screen,SCREEN_WIDTH-870, 200);
+                Menu_game.RenderText(g_screen,SCREEN_WIDTH-920, 200);
                 if (g_event.type == SDL_KEYDOWN && g_event.key.repeat == 0)
                     {
                         switch (g_event.key.keysym.sym)
                         {
-                            case SDLK_BACKSPACE:
+                            case SDLK_UP:
                             {
                                 Menu = false;
                             }
@@ -178,9 +172,21 @@ int main(int argc, char* argv[])
                             {
                                  GameRunning = false;
                             }
-
+                            break;
                         }
                     }
+                SDL_RenderPresent(g_screen);
+            }
+            else
+            {
+                // tinh diem tu luc bat dau tro choi
+            Uint32 score_val = SDL_GetTicks() / 100 - current_time;
+
+            for(int i=0;i<Background;i++)
+            {
+                g_background[i].Render(g_screen,NULL,i);
+                g_background[i].Render2(g_screen,NULL,i);
+                g_background[i].increase_background_speed(score_val);
             }
 
             p_player.Jumpp();
@@ -189,8 +195,11 @@ int main(int argc, char* argv[])
 
             enemy_.Show_enemy(g_screen);
             enemy_.Move();
+            enemy_.increase_speed(score_val);
+
             enemy2_.Show_enemy(g_screen);
             enemy2_.Move();
+            enemy2_.increase_speed2(score_val);
 
 
             //FPS
@@ -214,24 +223,26 @@ int main(int argc, char* argv[])
             {
                 collide =  true;
             }
-        }
-        if(collide == true)
-        {
-            for(int i=0;i <Background;i++)
-            g_background[i].back_groundSpeed[i] = 0;
-            p_player.Pausee();
-            enemy2_.Pause2();
-            enemy_.Pause1();
-        }
-
-        //score game
-        //if(Menu == false)
-        //{
-            std::string str_score = "Score: ";
-            Uint32 score_val = SDL_GetTicks() / 100;
-            std::string str_ = std::to_string(score_val);
-            if(collide == false)
+            }
+            if(collide == true)
             {
+                for(int i=0;i <Background;i++)
+                {
+                    g_background[i].back_groundSpeed[i] = 0;
+                }
+                p_player.Pausee();
+                enemy2_.Pause2();
+                enemy_.Pause1();
+
+            }
+
+            //score game
+            //if(Menu == false)
+            //{
+            std::string str_score = "SCORE: ";
+            if(collide == false )
+            {
+                std::string str_ = std::to_string(score_val);
                 str_score += str_;
             }
             score_game.SetText(str_score);
@@ -239,8 +250,9 @@ int main(int argc, char* argv[])
             score_game.RenderText(g_screen, SCREEN_WIDTH - 200, 15);
 
             SDL_RenderPresent(g_screen);
-        //}
+            //}
 
+    }
     }
 
     close();

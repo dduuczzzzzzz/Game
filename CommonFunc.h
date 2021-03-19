@@ -44,4 +44,6 @@ const int frameDelay = 1000/FPS;
 #define slime_height 57
 #define slime_width 57
 
+#define speed_accelerate 1
+
 #endif // COMMONFUNC_H_INCLUDED
