@@ -150,18 +150,23 @@ int GameBase::getHeight()
     return mheight;
 }
 
-bool GameBase::checkCollision()
-{
-
-}
-
 void GameBase::increase_background_speed(Uint32 time_)
 {
-    if(time_ % 150 == 0)
+    if(time_ % 100 == 0)
     {
         for(int i=0; i<Background; i++)
         {
             back_groundSpeed[i] += speed_accelerate;
         }
     }
+}
+
+void GameBase::Set_default()
+{
+        back_groundSpeed[0] = BG1_speed;
+        back_groundSpeed[1] = BG2_speed;
+        back_groundSpeed[2] = BG3_speed;
+        back_groundSpeed[3] = BG4_speed;
+        back_groundSpeed[4] = BG5_speed;
+        back_groundSpeed[5] = GROUND_SPEED;
 }

@@ -150,3 +150,9 @@ void MainObject::Pausee()
     pause = true;
 }
 
+void MainObject::Set_default_player()
+{
+    pause = false;
+    Jumpspeed = 15;
+    Fallspeed = 15;
+}

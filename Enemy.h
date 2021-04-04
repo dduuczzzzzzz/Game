@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#define UP 2
+#define DOWN 1
 
 
 class Enemy : public GameBase
@@ -20,7 +22,9 @@ public:
     int getPos_X();
     int getPos_Y();
     void Pause1();
+    void harder(Uint32 time_);
     void increase_speed(Uint32 time_);
+    void Set_default_enemy1();
 
 private:
     float x_value;
@@ -37,6 +41,9 @@ private:
     int frame_num;
     bool pause;
     int enemy_speed ;
+    int status;
+    float up_down_speed;
+
 };
 
 

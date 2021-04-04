@@ -11,6 +11,8 @@ Enemy::Enemy()
     //status = rand() % (1);
     pause = false;
     enemy_speed = 8;
+    status = 1;
+    up_down_speed = 0.1;
 }
 Enemy::~Enemy()
 {
@@ -57,20 +59,6 @@ void Enemy::set_clips_enemy()
             Enemy_frame_clips[4].w = width_frame;
             Enemy_frame_clips[4].h = height_frame;
 
-          /*  Enemy_frame_clips[5].x = width_frame * 5;
-            Enemy_frame_clips[5].y = 0;
-            Enemy_frame_clips[5].w = width_frame;
-            Enemy_frame_clips[5].h = height_frame;
-
-            Enemy_frame_clips[6].x = width_frame * 6;
-            Enemy_frame_clips[6].y = 0;
-            Enemy_frame_clips[6].w = width_frame;
-            Enemy_frame_clips[6].h = height_frame;
-
-            Enemy_frame_clips[7].x = width_frame * 7;
-            Enemy_frame_clips[7].y = 0;
-            Enemy_frame_clips[7].w = width_frame;
-            Enemy_frame_clips[7].h = height_frame;*/
     }
 }
 
@@ -118,10 +106,48 @@ void Enemy::Pause1()
     pause = true;
 }
 
-void Enemy::increase_speed(Uint32 time_)
+void Enemy::harder(Uint32 time_)
 {
-    if(time_ % 150 == 0)
+    if(pause == false)
     {
-        enemy_speed = enemy_speed + speed_accelerate;
+        if(time_ >= 150)
+        {
+            if(status == DOWN)
+            {
+                y_birds_pos_ += 2+up_down_speed;
+            }
+            if(y_birds_pos_ >= 385)
+            {
+                status = UP;
+            }
+            if(status == UP && y_birds_pos_ >= 340)
+            {
+                y_birds_pos_ -= 2+up_down_speed;
+            }
+            if(y_birds_pos_ <= 340)
+            {
+                status = DOWN;
+            }
+        }
     }
 }
+
+void Enemy::increase_speed(Uint32 time_)
+{
+    if(time_ % 100 == 0)
+    {
+        enemy_speed = enemy_speed + speed_accelerate;
+        up_down_speed += 0.1;
+    }
+}
+
+ void Enemy::Set_default_enemy1()
+ {
+    pause = false;
+    x_birds_pos_ = rand()% (SCREEN_WIDTH+500) + SCREEN_WIDTH;
+    y_birds_pos_ = 340;
+    x_value= 0;
+    enemy_speed = 8;
+    up_down_speed = 0.1;
+
+ }

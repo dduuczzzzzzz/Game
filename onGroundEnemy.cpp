@@ -94,7 +94,7 @@ void onGroundEnemy::Show_enemy(SDL_Renderer* des)
 
 }
 
-void onGroundEnemy::Move()
+void onGroundEnemy::Move2()
 { if(pause == false)
     {
         x_cactus_pos_ = x_cactus_pos_ - slime_speed;
@@ -119,8 +119,17 @@ void onGroundEnemy::Pause2()
 
 void onGroundEnemy::increase_speed2(Uint32 time_)
 {
-    if(time_ % 150 == 0)
+    if(time_ % 100 == 0)
     {
         slime_speed = slime_speed + speed_accelerate;
     }
+}
+
+void onGroundEnemy::Set_default_enemy2()
+{
+    pause = false;
+    x_cactus_pos_ = rand()% (SCREEN_WIDTH+300) + SCREEN_WIDTH;
+    y_cactus_pos_ = 412;
+    x_value= 0;
+    slime_speed = 11;
 }

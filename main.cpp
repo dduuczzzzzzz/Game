@@ -105,15 +105,13 @@ int main(int argc, char* argv[])
     {
         cout << "error -- 2" << endl;
     }
-    srand(time(NULL));
-    bool GameRunning = true;
 
     TextFunc Menu_game;
     Menu_game.SetColor();
 
     SDL_RenderPresent(g_screen);
 
-    // nhan vat va quai
+    // player and monsters
     MainObject p_player;
     p_player.loadIMG("sprites/run_1.png", g_screen);
     p_player.set_clips();
@@ -121,11 +119,12 @@ int main(int argc, char* argv[])
     Enemy enemy_;
     enemy_.loadIMG("enemy/bat.png", g_screen);
     enemy_.set_clips_enemy();
+
     onGroundEnemy enemy2_;
     enemy2_.loadIMG("enemy/slime.png", g_screen);
     enemy2_.set_clips_enemy();
 
-    //time
+    // score
     TextFunc score_game;
     score_game.SetColor();
 
@@ -133,8 +132,11 @@ int main(int argc, char* argv[])
     int frameTime;
     Uint32 current_time;
 
+    bool GameRunning = true;
     bool collide = false;
     bool Menu = true;
+    bool Play_Again = false;
+    Uint32 score_val = 0;
     while(GameRunning)
     {
             while(SDL_PollEvent(&g_event)!= 0)
@@ -145,7 +147,6 @@ int main(int argc, char* argv[])
                     }
 
             }
-
             frameStart = SDL_GetTicks();
 
             SDL_SetRenderDrawColor(g_screen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
@@ -179,14 +180,16 @@ int main(int argc, char* argv[])
             }
             else
             {
+
                 // tinh diem tu luc bat dau tro choi
-            Uint32 score_val = SDL_GetTicks() / 100 - current_time;
+            score_val += 4;
+
 
             for(int i=0;i<Background;i++)
             {
                 g_background[i].Render(g_screen,NULL,i);
                 g_background[i].Render2(g_screen,NULL,i);
-                g_background[i].increase_background_speed(score_val);
+                g_background[i].increase_background_speed(score_val/10);
             }
 
             p_player.Jumpp();
@@ -195,11 +198,12 @@ int main(int argc, char* argv[])
 
             enemy_.Show_enemy(g_screen);
             enemy_.Move();
-            enemy_.increase_speed(score_val);
+            enemy_.increase_speed(score_val/10);
+            enemy_.harder(score_val/10);
 
             enemy2_.Show_enemy(g_screen);
-            enemy2_.Move();
-            enemy2_.increase_speed2(score_val);
+            enemy2_.Move2();
+            enemy2_.increase_speed2(score_val/10);
 
 
             //FPS
@@ -234,17 +238,34 @@ int main(int argc, char* argv[])
                 enemy2_.Pause2();
                 enemy_.Pause1();
 
-            }
+                        switch (g_event.key.keysym.sym)
+                        {
+                            case SDLK_UP:
+                            {
+                                for(int i=0;i<Background;i++)
+                                g_background[i].Set_default();
+                                p_player.Set_default_player();
+                                enemy_.Set_default_enemy1();
+                                enemy_.Move();
+                                enemy2_.Set_default_enemy2();
+                                enemy2_.Move2();
+                            }
+                            break;
+                            case SDLK_ESCAPE:
+                            {
+                                 GameRunning = false;
+                            }
+                            break;
+                        }
 
+            }
             //score game
             //if(Menu == false)
             //{
             std::string str_score = "SCORE: ";
-            if(collide == false )
-            {
-                std::string str_ = std::to_string(score_val);
-                str_score += str_;
-            }
+            std::string str_ = std::to_string(score_val/10);
+            str_score += str_;
+            if (collide == true) score_val-= 4;
             score_game.SetText(str_score);
             score_game.LoadFromRenderText(font_score, g_screen);
             score_game.RenderText(g_screen, SCREEN_WIDTH - 200, 15);
@@ -252,34 +273,10 @@ int main(int argc, char* argv[])
             SDL_RenderPresent(g_screen);
             //}
 
-    }
+        }
     }
 
     close();
     return 0;
-}
-
-bool check_coolide(MainObject p_player, Enemy enemy_, onGroundEnemy enemy2_)
-{
-    //check collide
-        if(p_player.getPosX() + 30 -16 >= enemy2_.getPos__X() && p_player.getPosX() + 12  <= enemy2_.getPos__X() + 57)
-        {
-            if(p_player.getPosY() + 15>= enemy2_.getPos__Y())
-            {
-                //GameRunning = false;
-
-                return true;
-            }
-        }
-        // trừ và cộng các vị trí đi 1 số đơn vị để hình ảnh va chạm trông thật hơn
-        else if(p_player.getPosX()+30 -15 >= enemy_.getPos_X()+32 -18 && p_player.getPosX()  <= enemy_.getPos_X()+32 )
-        {
-            if(p_player.getPosY()+45 <= enemy_.getPos_Y()+32 +15&& p_player.getPosY()+45  >= enemy_.getPos_Y()+15)
-            {
-                //GameRunning = false;
-
-                return true;
-            }
-        }
 }
 

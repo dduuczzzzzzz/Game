@@ -26,6 +26,7 @@ public:
     int getPosX();
     int getPosY();
     void Pausee();
+    void Set_default_player();
 
 
 private:

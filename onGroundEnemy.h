@@ -15,11 +15,12 @@ public:
     bool loadIMG(std::string path, SDL_Renderer* screen);
     void Show_enemy(SDL_Renderer* des);
     void set_clips_enemy();
-    void Move();
+    void Move2();
     int getPos__X();
     int getPos__Y();
     void Pause2();
     void increase_speed2(Uint32 time_);
+    void Set_default_enemy2();
 
 private:
     float x_value;

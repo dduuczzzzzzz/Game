@@ -21,12 +21,14 @@ public:
     void Render(SDL_Renderer* des, SDL_Rect* rectt, int i);
     void Render2(SDL_Renderer* des2, SDL_Rect* rectt2, int i);
     void Render3(SDL_Renderer* des3, SDL_Rect* rect3, SDL_Rect* rect4);
+
     void Free();
+
     int getWidth();
     int getHeight();
-    bool checkCollision();
     double back_groundSpeed[6];
     void increase_background_speed(Uint32 time_);
+    void Set_default();
 
 protected:
     SDL_Texture* p_object;
