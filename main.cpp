@@ -93,8 +93,6 @@ void close()
     SDL_Quit();
 }
 
-bool check_coolide(MainObject p_player, Enemy enemy_, onGroundEnemy enemy2_);
-
 int main(int argc, char* argv[])
 {
     if(Init()==false)
@@ -106,6 +104,7 @@ int main(int argc, char* argv[])
         cout << "error -- 2" << endl;
     }
 
+    // Menu
     TextFunc Menu_game;
     Menu_game.SetColor();
 
@@ -132,11 +131,47 @@ int main(int argc, char* argv[])
     int frameTime;
     Uint32 current_time;
 
-    bool GameRunning = true;
+    bool GameRunning = false;
     bool collide = false;
     bool Menu = true;
     bool Play_Again = false;
     Uint32 score_val = 0;
+
+    while(Menu)
+            {
+                    while(SDL_PollEvent(&g_event)!= 0)
+                {
+                    if(g_event.type == SDL_QUIT)
+                        {
+                            Menu = false;
+                        }
+
+                }
+                current_time = SDL_GetTicks() / 100;
+                g_Theme.Render3(g_screen,NULL,NULL);
+                std::string Menu_str_ = "PRESS KEY UP TO START GAME,  ESC TO QUIT, WHEN PLAY, PRESS THE KEY UP TO JUMP!";
+                Menu_game.SetText(Menu_str_);
+                Menu_game.LoadFromRenderText(font_score,g_screen);
+                Menu_game.RenderText(g_screen,SCREEN_WIDTH-920, 200);
+                if (g_event.type == SDL_KEYDOWN && g_event.key.repeat == 0)
+                    {
+                        switch (g_event.key.keysym.sym)
+                        {
+                            case SDLK_UP:
+                            {
+                                Menu = false;
+                                GameRunning = true;
+                            }
+                            break;
+                            case SDLK_ESCAPE:
+                            {
+                                 GameRunning = false;
+                            }
+                            break;
+                        }
+                    }
+                SDL_RenderPresent(g_screen);
+            }
     while(GameRunning)
     {
             while(SDL_PollEvent(&g_event)!= 0)
@@ -152,34 +187,6 @@ int main(int argc, char* argv[])
             SDL_SetRenderDrawColor(g_screen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
 
 
-           if(Menu == true)
-            {
-                current_time = SDL_GetTicks() / 100;
-                g_Theme.Render3(g_screen,NULL,NULL);
-                std::string Menu_str_ = "PRESS KEY UP TO START GAME,  ESC TO QUIT, WHEN PLAY, PRESS THE KEY UP TO JUMP!";
-                Menu_game.SetText(Menu_str_);
-                Menu_game.LoadFromRenderText(font_score,g_screen);
-                Menu_game.RenderText(g_screen,SCREEN_WIDTH-920, 200);
-                if (g_event.type == SDL_KEYDOWN && g_event.key.repeat == 0)
-                    {
-                        switch (g_event.key.keysym.sym)
-                        {
-                            case SDLK_UP:
-                            {
-                                Menu = false;
-                            }
-                            break;
-                            case SDLK_ESCAPE:
-                            {
-                                 GameRunning = false;
-                            }
-                            break;
-                        }
-                    }
-                SDL_RenderPresent(g_screen);
-            }
-            else
-            {
 
                 // tinh diem tu luc bat dau tro choi
             score_val += 4;
@@ -237,18 +244,13 @@ int main(int argc, char* argv[])
                 p_player.Pausee();
                 enemy2_.Pause2();
                 enemy_.Pause1();
-
+                if (g_event.type == SDL_KEYDOWN && g_event.key.repeat == 0)
+                    {
                         switch (g_event.key.keysym.sym)
                         {
                             case SDLK_UP:
                             {
-                                for(int i=0;i<Background;i++)
-                                g_background[i].Set_default();
-                                p_player.Set_default_player();
-                                enemy_.Set_default_enemy1();
-                                enemy_.Move();
-                                enemy2_.Set_default_enemy2();
-                                enemy2_.Move2();
+                                Play_Again = true;
                             }
                             break;
                             case SDLK_ESCAPE:
@@ -257,6 +259,17 @@ int main(int argc, char* argv[])
                             }
                             break;
                         }
+                    }
+                if(Play_Again == true)
+                {
+                    for(int i=0;i<Background;i++)
+                                g_background[i].Set_default();
+                                p_player.Set_default_player();
+                                enemy_.Set_default_enemy1();
+                                enemy_.Move();
+                                enemy2_.Set_default_enemy2();
+                                enemy2_.Move2();
+                }
 
             }
             //score game
@@ -273,7 +286,7 @@ int main(int argc, char* argv[])
             SDL_RenderPresent(g_screen);
             //}
 
-        }
+
     }
 
     close();
