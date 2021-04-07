@@ -19,9 +19,9 @@ onGroundEnemy::~onGroundEnemy()
 
 bool onGroundEnemy::loadIMG(std::string path, SDL_Renderer* screen)
 {
-    bool ret = GameBase::loadIMG(path, screen);
+    bool a = GameBase::loadIMG(path, screen);
 
-        if(ret == true)
+        if(a == true)
         {
             width_frame = rect.w/8;
             height_frame = rect.h;

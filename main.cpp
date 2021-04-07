@@ -24,7 +24,7 @@ const string LAYER[Background]={
 GameBase g_background[Background];
 GameBase g_Theme;
 GameBase g_menu;
-TTF_Font* font_score;
+TTF_Font* font;
 
 
 bool Init()
@@ -49,8 +49,8 @@ bool Init()
             success = false;
         }
     if(TTF_Init() == -1)  {success = false;}
-    else {font_score = TTF_OpenFont("font/pixel.ttf",15);}
-    if(font_score == NULL)
+    else {font = TTF_OpenFont("font/pixel.ttf",15);}
+    if(font == NULL)
     {
         success = false;
     }
@@ -151,7 +151,7 @@ int main(int argc, char* argv[])
                 g_Theme.Render3(g_screen,NULL,NULL);
                 std::string Menu_str_ = "PRESS KEY UP TO START GAME,  ESC TO QUIT, WHEN PLAY, PRESS THE KEY UP TO JUMP!";
                 Menu_game.SetText(Menu_str_);
-                Menu_game.LoadFromRenderText(font_score,g_screen);
+                Menu_game.LoadFromRenderText(font,g_screen);
                 Menu_game.RenderText(g_screen,SCREEN_WIDTH-920, 200);
                 if (g_event.type == SDL_KEYDOWN && g_event.key.repeat == 0)
                     {
@@ -212,13 +212,6 @@ int main(int argc, char* argv[])
             enemy2_.Move2();
             enemy2_.increase_speed2(score_val/10);
 
-
-            //FPS
-            frameTime = SDL_GetTicks() - frameStart;
-            if(frameDelay > frameTime)
-            {
-                SDL_Delay(frameDelay - frameTime);
-            }
             //check collide
             if(p_player.getPosX() + 30 -16 >= enemy2_.getPos__X() && p_player.getPosX() + 12  <= enemy2_.getPos__X() + 57)
             {
@@ -251,6 +244,8 @@ int main(int argc, char* argv[])
                             case SDLK_UP:
                             {
                                 Play_Again = true;
+                                score_val = 0;
+                                collide = false;
                             }
                             break;
                             case SDLK_ESCAPE:
@@ -260,18 +255,31 @@ int main(int argc, char* argv[])
                             break;
                         }
                     }
-                if(Play_Again == true)
-                {
-                    for(int i=0;i<Background;i++)
-                                g_background[i].Set_default();
-                                p_player.Set_default_player();
-                                enemy_.Set_default_enemy1();
-                                enemy_.Move();
-                                enemy2_.Set_default_enemy2();
-                                enemy2_.Move2();
-                }
-
             }
+            if(Play_Again == true)
+            {
+                    for(int i=0;i<Background;i++)
+                    {
+                        g_background[i].Set_default();
+                        g_background[i].increase_background_speed(score_val/10);
+                    }
+                    p_player.Set_default_player();
+
+                    enemy_.Set_default_enemy1();
+
+                    enemy2_.Set_default_enemy2();
+
+                    Play_Again = false;
+            }
+
+            //FPS
+            frameTime = SDL_GetTicks() - frameStart;
+            if(frameDelay > frameTime)
+            {
+                SDL_Delay(frameDelay - frameTime);
+            }
+
+
             //score game
             //if(Menu == false)
             //{
@@ -280,7 +288,7 @@ int main(int argc, char* argv[])
             str_score += str_;
             if (collide == true) score_val-= 4;
             score_game.SetText(str_score);
-            score_game.LoadFromRenderText(font_score, g_screen);
+            score_game.LoadFromRenderText(font, g_screen);
             score_game.RenderText(g_screen, SCREEN_WIDTH - 200, 15);
 
             SDL_RenderPresent(g_screen);

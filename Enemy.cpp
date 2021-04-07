@@ -21,8 +21,8 @@ Enemy::~Enemy()
 
 bool Enemy::loadIMG(std::string path, SDL_Renderer* screen)
 {
-    bool ret = GameBase::loadIMG(path, screen);
-     if(ret == true)
+    bool a = GameBase::loadIMG(path, screen);
+     if(a == true)
         {
             width_frame = rect.w / 5;
             height_frame = rect.h;
@@ -120,11 +120,11 @@ void Enemy::harder(Uint32 time_)
             {
                 status = UP;
             }
-            if(status == UP && y_birds_pos_ >= 340)
+            if(status == UP && y_birds_pos_ >= 335)
             {
-                y_birds_pos_ -= 2+up_down_speed;
+                y_birds_pos_ -= 2 + up_down_speed;
             }
-            if(y_birds_pos_ <= 340)
+            if(y_birds_pos_ <= 335)
             {
                 status = DOWN;
             }
