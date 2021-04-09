@@ -2,7 +2,7 @@
 1615209814 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\commonfunc.cpp
 	"CommonFunc.h"
 
-1617072947 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\commonfunc.h
+1617984231 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\commonfunc.h
 	<SDL.h>
 	<SDL_image.h>
 	<string>
@@ -21,7 +21,7 @@
 	"CommonFunc.h"
 	<string>
 
-1617983838 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\main.cpp
+1617987795 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -53,7 +53,7 @@
 	"GameBase.h"
 	<vector>
 
-1617757610 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\enemy.cpp
+1617987921 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\enemy.cpp
 	"Enemy.h"
 
 1617243634 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\enemy.h
@@ -87,4 +87,11 @@
 
 1617983889 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\textfunc.h
 	"CommonFunc.h"
+
+1617984715 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\lbutton.cpp
+	"Lbutton.h"
+
+1617984715 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\lbutton.h
+	"CommonFunc.h"
+	"GameBase.h"
 

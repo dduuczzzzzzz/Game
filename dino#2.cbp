@@ -56,6 +56,12 @@
 		<Unit filename="GameUltils.h">
 			<Option target="Debug" />
 		</Unit>
+		<Unit filename="Lbutton.cpp">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="Lbutton.h">
+			<Option target="Debug" />
+		</Unit>
 		<Unit filename="MainObject.cpp">
 			<Option target="Debug" />
 		</Unit>

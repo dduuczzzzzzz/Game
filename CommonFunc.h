@@ -24,7 +24,7 @@ const int RENDER_DRAW_COLOR = 0xff;
 
 const int Background = 6;
 
-const int FPS = 30;
+const int FPS = 32;
 const int frameDelay = 1000/FPS;
 
 #define GROUND 415

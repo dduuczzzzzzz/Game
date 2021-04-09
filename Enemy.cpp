@@ -137,7 +137,7 @@ void Enemy::increase_speed(Uint32 time_)
     if(time_ % 100 == 0)
     {
         enemy_speed = enemy_speed + speed_accelerate;
-        up_down_speed += 0.1;
+        up_down_speed += 0.2;
     }
 }
 

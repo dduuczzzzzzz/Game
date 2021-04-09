@@ -23,7 +23,7 @@ const string LAYER[Background]={
 
 GameBase g_background[Background];
 GameBase g_Theme;
-GameBase g_menu;
+GameBase g_instruct;
 TTF_Font* font;
 
 
@@ -74,6 +74,10 @@ bool loadBackground()
     {
         success = false;
     }
+    if(!g_instruct.loadIMG("background/instruction.png",g_screen))
+    {
+        success = false;
+    }
     return success;
 }
 
@@ -107,7 +111,9 @@ int main(int argc, char* argv[])
     // Menu
     GameBase Menu_game;
 
-    SDL_RenderPresent(g_screen);
+     // score
+    GameBase score_game;
+
 
     // player and monsters
     MainObject p_player;
@@ -122,17 +128,14 @@ int main(int argc, char* argv[])
     enemy2_.loadIMG("enemy/slime.png", g_screen);
     enemy2_.set_clips_enemy();
 
-    // score
-    GameBase score_game;
-
     Uint32 frameStart;
     int frameTime;
-    Uint32 current_time;
 
     bool GameRunning = false;
     bool collide = false;
     bool Menu = true;
     bool Play_Again = false;
+    bool Instruct = false;
     Uint32 score_val = 0;
 
     while(Menu)
@@ -145,13 +148,13 @@ int main(int argc, char* argv[])
                         }
 
                 }
-                current_time = SDL_GetTicks() / 100;
+
                 g_Theme.Render3(g_screen,NULL,NULL);
-                std::string Menu_str_ = "PRESS KEY UP TO START GAME,  ESC TO QUIT, WHEN PLAY, PRESS THE KEY UP TO JUMP!";
+                std::string Menu_str_ = "PRESS KEY UP TO START GAME,  ESC TO QUIT, KEY DOWN FOR INSTRUCTION !";
                 Menu_game.SetColor();
                 Menu_game.SetText(Menu_str_);
                 Menu_game.LoadFromRenderText(font,g_screen);
-                Menu_game.RenderText(g_screen,SCREEN_WIDTH-920, 200);
+                Menu_game.RenderText(g_screen,SCREEN_WIDTH-850, 200);
                 if (g_event.type == SDL_KEYDOWN && g_event.key.repeat == 0)
                     {
                         switch (g_event.key.keysym.sym)
@@ -168,10 +171,40 @@ int main(int argc, char* argv[])
                                  Menu = false;
                             }
                             break;
+                            case SDLK_DOWN:
+                            {
+                                Instruct = true;
+                                while(Instruct)
+                                    {
+                                            while(SDL_PollEvent(&g_event)!= 0)
+                                                {
+                                                    if(g_event.type == SDL_QUIT)
+                                                        {
+                                                            Instruct = false;
+                                                        }
+                                                }
+                                            g_instruct.Render3(g_screen,NULL,NULL);
+                                            if (g_event.type == SDL_KEYDOWN && g_event.key.repeat == 0)
+                                                    {
+                                                        switch (g_event.key.keysym.sym)
+                                                        {
+                                                            case SDLK_RIGHT:
+                                                            {
+
+                                                                Instruct = false;
+                                                            }
+                                                            break;
+                                                        }
+                                                    }
+                                            SDL_RenderPresent(g_screen);
+
+                                    }
+                            }
                         }
                     }
                 SDL_RenderPresent(g_screen);
             }
+
     while(GameRunning)
     {
             while(SDL_PollEvent(&g_event)!= 0)
