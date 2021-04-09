@@ -10,10 +10,10 @@
 	<SDL_ttf.h>
 	<vector>
 
-1617242320 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\gamebase.cpp
+1617983771 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\gamebase.cpp
 	"GameBase.h"
 
-1617242320 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\gamebase.h
+1617983704 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\gamebase.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -21,7 +21,7 @@
 	"CommonFunc.h"
 	<string>
 
-1617757125 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\main.cpp
+1617983838 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -31,7 +31,6 @@
 	"Enemy.h"
 	"onGroundEnemy.h"
 	"GameUltils.h"
-	"TextFunc.h"
 
 1617243635 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\mainobject.h
 	"GameBase.h"
@@ -54,7 +53,7 @@
 	"GameBase.h"
 	<vector>
 
-1617756634 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\enemy.cpp
+1617757610 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\enemy.cpp
 	"Enemy.h"
 
 1617243634 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\enemy.h
@@ -84,9 +83,8 @@
 1615629102 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\gameultils.cpp
 	"GameUltils.h"
 
-1615943186 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\textfunc.cpp
-	"TextFunc.h"
+1617983941 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\textfunc.cpp
 
-1615723768 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\textfunc.h
+1617983889 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\textfunc.h
 	"CommonFunc.h"
 

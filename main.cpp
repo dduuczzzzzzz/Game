@@ -7,7 +7,7 @@
 #include "Enemy.h"
 #include "onGroundEnemy.h"
 #include "GameUltils.h"
-#include "TextFunc.h"
+
 
 using namespace std;
 
@@ -105,8 +105,7 @@ int main(int argc, char* argv[])
     }
 
     // Menu
-    TextFunc Menu_game;
-    Menu_game.SetColor();
+    GameBase Menu_game;
 
     SDL_RenderPresent(g_screen);
 
@@ -124,8 +123,7 @@ int main(int argc, char* argv[])
     enemy2_.set_clips_enemy();
 
     // score
-    TextFunc score_game;
-    score_game.SetColor();
+    GameBase score_game;
 
     Uint32 frameStart;
     int frameTime;
@@ -150,6 +148,7 @@ int main(int argc, char* argv[])
                 current_time = SDL_GetTicks() / 100;
                 g_Theme.Render3(g_screen,NULL,NULL);
                 std::string Menu_str_ = "PRESS KEY UP TO START GAME,  ESC TO QUIT, WHEN PLAY, PRESS THE KEY UP TO JUMP!";
+                Menu_game.SetColor();
                 Menu_game.SetText(Menu_str_);
                 Menu_game.LoadFromRenderText(font,g_screen);
                 Menu_game.RenderText(g_screen,SCREEN_WIDTH-920, 200);
@@ -166,6 +165,7 @@ int main(int argc, char* argv[])
                             case SDLK_ESCAPE:
                             {
                                  GameRunning = false;
+                                 Menu = false;
                             }
                             break;
                         }
@@ -287,6 +287,7 @@ int main(int argc, char* argv[])
             std::string str_ = std::to_string(score_val/10);
             str_score += str_;
             if (collide == true) score_val-= 4;
+            score_game.SetColor();
             score_game.SetText(str_score);
             score_game.LoadFromRenderText(font, g_screen);
             score_game.RenderText(g_screen, SCREEN_WIDTH - 200, 15);

@@ -22,6 +22,12 @@ public:
     void Render2(SDL_Renderer* des2, SDL_Rect* rectt2, int i);
     void Render3(SDL_Renderer* des3, SDL_Rect* rect3, SDL_Rect* rect4);
 
+    bool LoadFromRenderText(TTF_Font* font, SDL_Renderer* screen);
+    void SetColor();
+    void RenderText(SDL_Renderer* screen, int xpos, int ypos, SDL_Rect* clip = NULL,double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    void SetText(const std::string& text) {str_ = text;}
+    std::string GetText() const {return str_;}
+
     void Free();
 
     int getWidth();
@@ -32,8 +38,10 @@ public:
 
 protected:
     SDL_Texture* p_object;
-    int mwidth;
-    int mheight;
+    std::string str_;
+    SDL_Color text_color;
+    int width;
+    int height;
     SDL_Rect rect;
     SDL_Rect Camera[6];
     SDL_Rect Camera2[6];

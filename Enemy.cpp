@@ -114,17 +114,17 @@ void Enemy::harder(Uint32 time_)
         {
             if(status == DOWN)
             {
-                y_birds_pos_ += 2+up_down_speed;
+                y_birds_pos_ += 2 + up_down_speed;
             }
-            if(y_birds_pos_ >= 385)
+            if(y_birds_pos_ >= 395)
             {
                 status = UP;
             }
-            if(status == UP && y_birds_pos_ >= 335)
+            if(status == UP && y_birds_pos_ >= 325)
             {
                 y_birds_pos_ -= 2 + up_down_speed;
             }
-            if(y_birds_pos_ <= 335)
+            if(y_birds_pos_ <= 325)
             {
                 status = DOWN;
             }

@@ -7,8 +7,11 @@ GameBase::GameBase()
         rect.y = 0;
         rect.w = 0;
         rect.h = 0;
-        mwidth = 0;
-        mheight = 0;
+        width = 0;
+        height = 0;
+        text_color.r = 0;
+        text_color.g = 0;
+        text_color.b = 0;
 
         Camera[0].x = 0;
         Camera[0].y = 0;
@@ -129,6 +132,41 @@ void GameBase::Render3(SDL_Renderer* des3, SDL_Rect* rect3, SDL_Rect* rect4)
     SDL_RenderCopy(des3 , p_object, rect3, rect4);
 }
 
+bool GameBase::LoadFromRenderText(TTF_Font* font, SDL_Renderer* screen)
+{
+    SDL_Surface* surface = TTF_RenderText_Solid(font, str_.c_str(), text_color);
+    if(surface)
+    {
+        p_object= SDL_CreateTextureFromSurface(screen, surface);
+        width = surface->w;
+        height = surface->h;
+
+        SDL_FreeSurface(surface);
+    }
+
+    return p_object != NULL;
+
+}
+
+void GameBase::SetColor()
+{
+    text_color.r = 0;
+    text_color.g = 0;
+    text_color.b = 0;
+}
+
+void GameBase::RenderText(SDL_Renderer* screen, int xpos, int ypos, SDL_Rect* clip,double angel, SDL_Point* center, SDL_RendererFlip flip)
+{
+    SDL_Rect renderquad = {xpos,ypos,width,height};
+    if(clip != NULL)
+    {
+        renderquad.w = clip->w;
+        renderquad.h = clip->h;
+    }
+    SDL_RenderCopyEx(screen, p_object, clip, &renderquad, angel, center, flip);
+}
+
+
 void GameBase::Free()
 {
     if(p_object!=NULL)
@@ -142,12 +180,12 @@ void GameBase::Free()
 
 int GameBase::getWidth()
 {
-    return mwidth;
+    return width;
 }
 
 int GameBase::getHeight()
 {
-    return mheight;
+    return height;
 }
 
 void GameBase::increase_background_speed(Uint32 time_)
