@@ -26,6 +26,13 @@ GameBase g_Theme;
 GameBase g_instruct;
 TTF_Font* font;
 
+GameBase gPlay;
+GameBase gHelp;
+GameBase gExit;
+
+Lbutton PlayButton;
+Lbutton HelpButton;
+Lbutton ExitButton;
 
 bool Init()
 {
@@ -78,6 +85,21 @@ bool loadBackground()
     {
         success = false;
     }
+    if(!gPlay.loadIMG("button/play_button.png",g_screen))
+    {
+        success = false;
+    }
+    if(!gHelp.loadIMG("button/help_button.png",g_screen))
+    {
+        success = false;
+    }
+    if(!gExit.loadIMG("button/exit_button.png",g_screen))
+    {
+        success = false;
+    }
+    PlayButton.setPosition(PLAY_BUTON_POSX, PLAY_BUTTON_POSY);
+    HelpButton.setPosition(HELP_BUTTON_POSX, HELP_BUTTON_POSY);
+    ExitButton.setPosition(EXIT_BUTTON_POSX, EXIT_BUTTON_POSY);
     return success;
 }
 
@@ -117,15 +139,15 @@ int main(int argc, char* argv[])
 
     // player and monsters
     MainObject p_player;
-    p_player.loadIMG("sprites/run_1.png", g_screen);
+    p_player.loadIMG1("sprites/run_1.png", g_screen);
     p_player.set_clips();
 
     Enemy enemy_;
-    enemy_.loadIMG("enemy/bat.png", g_screen);
+    enemy_.loadIMG2("enemy/bat.png", g_screen);
     enemy_.set_clips_enemy();
 
     onGroundEnemy enemy2_;
-    enemy2_.loadIMG("enemy/slime.png", g_screen);
+    enemy2_.loadIMG3("enemy/slime.png", g_screen);
     enemy2_.set_clips_enemy();
 
     Uint32 frameStart;
@@ -138,7 +160,7 @@ int main(int argc, char* argv[])
     bool Instruct = false;
     Uint32 score_val = 0;
 
-    while(Menu)
+     while(Menu)
             {
                     while(SDL_PollEvent(&g_event)!= 0)
                 {
@@ -221,7 +243,7 @@ int main(int argc, char* argv[])
 
 
 
-                // tinh diem tu luc bat dau tro choi
+            // tinh diem tu luc bat dau tro choi
             score_val += 4;
 
 

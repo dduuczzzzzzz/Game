@@ -12,7 +12,7 @@ public:
     onGroundEnemy();
     ~onGroundEnemy();
 
-    bool loadIMG(std::string path, SDL_Renderer* screen);
+    bool loadIMG3(std::string path, SDL_Renderer* screen);
     void Show_enemy(SDL_Renderer* des);
     void set_clips_enemy();
     void Move2();

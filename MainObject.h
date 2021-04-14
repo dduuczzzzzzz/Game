@@ -17,7 +17,7 @@ public:
     /*static const */int Jumpspeed = 15;
     /*static const */int Fallspeed = 15;
 
-    bool loadIMG(std::string path, SDL_Renderer* screen);
+    bool loadIMG1(std::string path, SDL_Renderer* screen);
     void Show(SDL_Renderer* des);
     void HandleAction(SDL_Event events/*, SDL_Renderer* screen*/);
     void set_clips();

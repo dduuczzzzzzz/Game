@@ -17,7 +17,7 @@ onGroundEnemy::~onGroundEnemy()
 
 }
 
-bool onGroundEnemy::loadIMG(std::string path, SDL_Renderer* screen)
+bool onGroundEnemy::loadIMG3(std::string path, SDL_Renderer* screen)
 {
     bool a = GameBase::loadIMG(path, screen);
 

@@ -46,4 +46,28 @@ const int frameDelay = 1000/FPS;
 
 #define speed_accelerate 1
 
+//Button constants
+const int BIG_BUTTON_WIDTH = 150;
+const int BIG_BUTTON_HEIGHT = 98;
+const int SMALL_BUTTON_WIDTH = 22;
+const int SMALL_BUTTON_HEIGHT = 34;
+
+enum button_sprites
+    {
+        BUTTON_MOUSE_OUT = 0,
+        BUTTON_MOUSE_OVER = 1,
+        BUTTON_TOTAL_SPRITES = 2,
+    };
+const int PLAY_BUTON_POSX = 420;
+const int PLAY_BUTTON_POSY= 186;
+const int HELP_BUTTON_POSX = 420;
+const int HELP_BUTTON_POSY = 293;
+const int EXIT_BUTTON_POSX = 420;
+const int EXIT_BUTTON_POSY = 402;
+const int BACK_BUTTON_POSX = 31;
+const int BACK_BUTTON_POSY = 29;
+
+#define BIG 0
+#define SMALL 1
+
 #endif // COMMONFUNC_H_INCLUDED

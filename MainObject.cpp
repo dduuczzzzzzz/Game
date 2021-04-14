@@ -23,7 +23,7 @@ bool MainObject::onGround()
     return y_pos_ == GROUND;
 }
 
-bool MainObject::loadIMG(std::string path, SDL_Renderer* screen)
+bool MainObject::loadIMG1(std::string path, SDL_Renderer* screen)
 {
     bool ret = GameBase::loadIMG(path, screen);
     if(ret == true)

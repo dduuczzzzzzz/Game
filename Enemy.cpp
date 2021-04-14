@@ -19,7 +19,7 @@ Enemy::~Enemy()
 
 }
 
-bool Enemy::loadIMG(std::string path, SDL_Renderer* screen)
+bool Enemy::loadIMG2(std::string path, SDL_Renderer* screen)
 {
     bool a = GameBase::loadIMG(path, screen);
      if(a == true)

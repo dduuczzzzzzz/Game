@@ -5,9 +5,14 @@
 #include "MainObject.h"
 #include "Enemy.h"
 #include "onGroundEnemy.h"
+#include "Lbutton.h"
 
-bool check_collision(MainObject p_player, Enemy enemy_, onGroundEnemy enemy2_);
-//bool check_coolide(MainObject p_player, Enemy enemy_, onGroundEnemy enemy2_);
+void Play_button(SDL_Event *e,Lbutton &PlayButton, bool Menu, bool GameRunning);
 
+void Hekp_button(SDL_Event *e, Lbutton &HelpButton, bool Instruct);
+
+void Exit_button(SDL_Event *e, Lbutton &ExitButton, bool Menu);
+
+void Render_play_button(Lbutton &PlayButton, GameBase gPlay);
 
 #endif // GAMEULTILS_H_INCLUDED
