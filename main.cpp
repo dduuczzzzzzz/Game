@@ -24,15 +24,12 @@ const string LAYER[Background]={
 GameBase g_background[Background];
 GameBase g_Theme;
 GameBase g_instruct;
+GameBase g_select_player;
+GameBase g_player1;
+GameBase g_player2;
+
 TTF_Font* font;
 
-GameBase gPlay;
-GameBase gHelp;
-GameBase gExit;
-
-Lbutton PlayButton;
-Lbutton HelpButton;
-Lbutton ExitButton;
 
 bool Init()
 {
@@ -77,29 +74,27 @@ bool loadBackground()
             success = false;
         }
     }
-    if (!g_Theme.loadIMG("background/theme.png",g_screen))
+    if (!g_Theme.loadIMG("background/theme4.png",g_screen))
     {
         success = false;
     }
-    if(!g_instruct.loadIMG("background/instruction.png",g_screen))
+    if(!g_instruct.loadIMG("background/instructt.png",g_screen))
     {
         success = false;
     }
-    if(!gPlay.loadIMG("button/play_button.png",g_screen))
+    if(!g_select_player.loadIMG("background/select player.png",g_screen))
     {
         success = false;
     }
-    if(!gHelp.loadIMG("button/help_button.png",g_screen))
+    if(!g_player1.loadIMG("background/adventure chose.png",g_screen))
     {
         success = false;
     }
-    if(!gExit.loadIMG("button/exit_button.png",g_screen))
+    if(!g_player2.loadIMG("background/dino chose.png",g_screen))
     {
         success = false;
     }
-    PlayButton.setPosition(PLAY_BUTON_POSX, PLAY_BUTTON_POSY);
-    HelpButton.setPosition(HELP_BUTTON_POSX, HELP_BUTTON_POSY);
-    ExitButton.setPosition(EXIT_BUTTON_POSX, EXIT_BUTTON_POSY);
+
     return success;
 }
 
@@ -136,11 +131,10 @@ int main(int argc, char* argv[])
      // score
     GameBase score_game;
 
+    GameBase endgame1;
 
     // player and monsters
     MainObject p_player;
-    p_player.loadIMG1("sprites/run_1.png", g_screen);
-    p_player.set_clips();
 
     Enemy enemy_;
     enemy_.loadIMG2("enemy/bat.png", g_screen);
@@ -158,33 +152,26 @@ int main(int argc, char* argv[])
     bool Menu = true;
     bool Play_Again = false;
     bool Instruct = false;
+    bool Chose_player = false;
+    bool Player1 = false;
+    bool Player2 = false;
+    int p = 0;
     Uint32 score_val = 0;
 
      while(Menu)
             {
-                    while(SDL_PollEvent(&g_event)!= 0)
+                while(SDL_PollEvent(&g_event)!= 0)
                 {
                     if(g_event.type == SDL_QUIT)
                         {
                             Menu = false;
                         }
-
-                }
-
-                g_Theme.Render3(g_screen,NULL,NULL);
-                std::string Menu_str_ = "PRESS KEY UP TO START GAME,  ESC TO QUIT, KEY DOWN FOR INSTRUCTION !";
-                Menu_game.SetColor();
-                Menu_game.SetText(Menu_str_);
-                Menu_game.LoadFromRenderText(font,g_screen);
-                Menu_game.RenderText(g_screen,SCREEN_WIDTH-850, 200);
-                if (g_event.type == SDL_KEYDOWN && g_event.key.repeat == 0)
-                    {
                         switch (g_event.key.keysym.sym)
                         {
-                            case SDLK_UP:
+                            case SDLK_SPACE:
                             {
+                                Instruct = true;
                                 Menu = false;
-                                GameRunning = true;
                             }
                             break;
                             case SDLK_ESCAPE:
@@ -192,40 +179,111 @@ int main(int argc, char* argv[])
                                  GameRunning = false;
                                  Menu = false;
                             }
-                            break;
-                            case SDLK_DOWN:
-                            {
-                                Instruct = true;
-                                while(Instruct)
-                                    {
-                                            while(SDL_PollEvent(&g_event)!= 0)
-                                                {
-                                                    if(g_event.type == SDL_QUIT)
-                                                        {
-                                                            Instruct = false;
-                                                        }
-                                                }
-                                            g_instruct.Render3(g_screen,NULL,NULL);
-                                            if (g_event.type == SDL_KEYDOWN && g_event.key.repeat == 0)
-                                                    {
-                                                        switch (g_event.key.keysym.sym)
-                                                        {
-                                                            case SDLK_RIGHT:
-                                                            {
 
-                                                                Instruct = false;
-                                                            }
-                                                            break;
-                                                        }
-                                                    }
-                                            SDL_RenderPresent(g_screen);
-
-                                    }
-                            }
-                        }
-                    }
+                }
+                g_Theme.Render3(g_screen,NULL,NULL);
                 SDL_RenderPresent(g_screen);
             }
+            }
+    while(Instruct)
+            {
+                while(SDL_PollEvent(&g_event)!= 0)
+                    {
+                        if(g_event.type == SDL_QUIT)
+                            {
+                                Instruct = false;
+                            }
+                        switch (g_event.key.keysym.sym)
+                            {
+                                case SDLK_RIGHT:
+                                    {
+                                        Instruct = false;
+                                        Chose_player = true;
+                                    }
+                                break;
+                            }
+                    }
+                g_instruct.Render3(g_screen,NULL,NULL);
+                SDL_RenderPresent(g_screen);
+
+            }
+    while(Chose_player)
+    {
+            while(SDL_PollEvent(&g_event)!= 0)
+            {
+                if(g_event.type == SDL_QUIT)
+                {
+                    Chose_player = false;
+                }
+                switch (g_event.key.keysym.sym)
+                {
+                    case SDLK_1:
+                        {
+                            Chose_player = false;
+                            Player1 = true;
+                            p = 1;
+                        }
+                    break;
+                    case SDLK_2:
+                        {
+                            Chose_player = false;
+                            Player2 = true;
+                            p = 2;
+                        }
+                    break;
+                }
+            }
+            g_select_player.Render3(g_screen,NULL,NULL);
+            SDL_RenderPresent(g_screen);
+
+    }
+    while(Player1)
+    {
+        while(SDL_PollEvent(&g_event)!= 0)
+        {
+            if(g_event.type == SDL_QUIT)
+            {
+                Player1 = false;
+            }
+            if( g_event.key.keysym.sym == SDLK_SPACE)
+            {
+                Player1 = false;
+                GameRunning = true;
+            }
+        }
+        g_player1.Render3(g_screen, NULL, NULL);
+        SDL_RenderPresent(g_screen);
+    }
+
+    while(Player2)
+    {
+        while(SDL_PollEvent(&g_event)!= 0)
+        {
+            if(g_event.type == SDL_QUIT)
+            {
+                Player2 = false;
+            }
+            if( g_event.key.keysym.sym == SDLK_SPACE)
+            {
+                Player2 = false;
+                GameRunning = true;
+            }
+        }
+        g_player2.Render3(g_screen, NULL, NULL);
+        SDL_RenderPresent(g_screen);
+    }
+
+    if(p == 1)
+    {
+        p_player.loadIMG1("sprites/run_1.png", g_screen);
+        p_player.set_clips(p);
+    }
+    else if(p == 2)
+    {
+        p_player.loadIMG4("sprites/char.png", g_screen);
+        p_player.set_clips(p);
+    }
+
 
     while(GameRunning)
     {
@@ -255,8 +313,8 @@ int main(int argc, char* argv[])
             }
 
             p_player.Jumpp();
-            p_player.Show(g_screen);
-            p_player.HandleAction(g_event /*, g_screen*/);
+            p_player.Show(g_screen,p);
+            p_player.HandleAction(g_event );
 
             enemy_.Show_enemy(g_screen);
             enemy_.Move();
@@ -292,11 +350,17 @@ int main(int argc, char* argv[])
                 p_player.Pausee();
                 enemy2_.Pause2();
                 enemy_.Pause1();
-                if (g_event.type == SDL_KEYDOWN && g_event.key.repeat == 0)
-                    {
+
+                std::string end_game1 = "YOU LOSE !!!!  Press SPACE to replay or ESC to quit game !!!";
+                endgame1.SetColor();
+                endgame1.SetText(end_game1);
+                endgame1.LoadFromRenderText(font, g_screen);
+                endgame1.RenderText(g_screen, 150, 70);
+
+
                         switch (g_event.key.keysym.sym)
                         {
-                            case SDLK_UP:
+                            case SDLK_SPACE:
                             {
                                 Play_Again = true;
                                 score_val = 0;
@@ -309,7 +373,7 @@ int main(int argc, char* argv[])
                             }
                             break;
                         }
-                    }
+
             }
             if(Play_Again == true)
             {

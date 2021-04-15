@@ -18,9 +18,10 @@ public:
     /*static const */int Fallspeed = 15;
 
     bool loadIMG1(std::string path, SDL_Renderer* screen);
-    void Show(SDL_Renderer* des);
+    bool loadIMG4(std::string path, SDL_Renderer* screen);
+    void Show(SDL_Renderer* des, int p);
     void HandleAction(SDL_Event events/*, SDL_Renderer* screen*/);
-    void set_clips();
+    void set_clips(int p);
     bool onGround();
     void Jumpp();
     int getPosX();
@@ -40,6 +41,7 @@ private:
     int height_frame;
 
     SDL_Rect frame_clips[8];
+    SDL_Rect dino_frame_clips[6];
 
     int frame_num;
     int status;
