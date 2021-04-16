@@ -3,8 +3,8 @@
 onGroundEnemy::onGroundEnemy()
 {
     frame_num = 0;
-    x_cactus_pos_ = rand()% (SCREEN_WIDTH+300) + SCREEN_WIDTH;
-    y_cactus_pos_ = 412;
+    x_slime_pos_ = rand()% (SCREEN_WIDTH+300) + SCREEN_WIDTH;
+    y_slime_pos_ = 412;
     x_value= 0;
     width_frame = 0;
     height_frame = 0;
@@ -83,8 +83,8 @@ void onGroundEnemy::Show_enemy(SDL_Renderer* des)
         frame_num++;
         if(frame_num>=6) frame_num=0;
     }
-        rect.x = x_cactus_pos_;
-        rect.y = y_cactus_pos_;
+        rect.x = x_slime_pos_;
+        rect.y = y_slime_pos_;
 
         SDL_Rect* current_clip = &Enemy2_frame_clips[frame_num];
 
@@ -97,19 +97,19 @@ void onGroundEnemy::Show_enemy(SDL_Renderer* des)
 void onGroundEnemy::Move2()
 { if(pause == false)
     {
-        x_cactus_pos_ = x_cactus_pos_ - slime_speed;
-        if(x_cactus_pos_ < 0) {x_cactus_pos_ = rand()% (300) + SCREEN_WIDTH; }
+        x_slime_pos_ = x_slime_pos_ - slime_speed;
+        if(x_slime_pos_ < 0) {x_slime_pos_ = rand()% (300) + SCREEN_WIDTH; }
     }
 }
 
 int onGroundEnemy::getPos__X()
 {
-    return x_cactus_pos_;
+    return x_slime_pos_;
 }
 
 int onGroundEnemy::getPos__Y()
 {
-    return y_cactus_pos_;
+    return y_slime_pos_;
 }
 
 void onGroundEnemy::Pause2()
@@ -128,8 +128,8 @@ void onGroundEnemy::increase_speed2(Uint32 time_)
 void onGroundEnemy::Set_default_enemy2()
 {
     pause = false;
-    x_cactus_pos_ = rand()% (SCREEN_WIDTH+300) + SCREEN_WIDTH;
-    y_cactus_pos_ = 412;
+    x_slime_pos_ = rand()% (SCREEN_WIDTH+300) + SCREEN_WIDTH;
+    y_slime_pos_ = 412;
     x_value= 0;
     slime_speed = 11;
 }

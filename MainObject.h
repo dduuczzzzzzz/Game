@@ -14,18 +14,21 @@ public:
     MainObject();
     ~MainObject();
 
-    /*static const */int Jumpspeed = 15;
-    /*static const */int Fallspeed = 15;
+    int Jumpspeed = 15;
+    int Fallspeed = 15;
 
-    bool loadIMG1(std::string path, SDL_Renderer* screen);
-    bool loadIMG4(std::string path, SDL_Renderer* screen);
+    //player
+    bool loadIMG_player1(std::string path, SDL_Renderer* screen);
+    bool loadIMG_player2(std::string path, SDL_Renderer* screen);
     void Show(SDL_Renderer* des, int p);
     void HandleAction(SDL_Event events/*, SDL_Renderer* screen*/);
     void set_clips(int p);
     bool onGround();
     void Jumpp();
+
     int getPosX();
     int getPosY();
+
     void Pausee();
     void Set_default_player();
 

@@ -26,8 +26,8 @@ private:
     float x_value;
     float y_value;
 
-    float x_cactus_pos_;
-    float y_cactus_pos_;
+    float x_slime_pos_;
+    float y_slime_pos_;
 
     int width_frame;
     int height_frame;

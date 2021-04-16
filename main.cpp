@@ -275,12 +275,12 @@ int main(int argc, char* argv[])
 
     if(p == 1)
     {
-        p_player.loadIMG1("sprites/run_1.png", g_screen);
+        p_player.loadIMG_player1("sprites/run_1.png", g_screen);
         p_player.set_clips(p);
     }
     else if(p == 2)
     {
-        p_player.loadIMG4("sprites/char.png", g_screen);
+        p_player.loadIMG_player2("sprites/char.png", g_screen);
         p_player.set_clips(p);
     }
 
