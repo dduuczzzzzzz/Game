@@ -5,7 +5,6 @@
 #include "GameBase.h"
 #include "MainObject.h"
 #include "Enemy.h"
-#include "onGroundEnemy.h"
 #include "GameUltils.h"
 
 
@@ -140,9 +139,9 @@ int main(int argc, char* argv[])
     enemy_.loadIMG2("enemy/bat.png", g_screen);
     enemy_.set_clips_enemy();
 
-    onGroundEnemy enemy2_;
+    Enemy enemy2_;
     enemy2_.loadIMG3("enemy/slime.png", g_screen);
-    enemy2_.set_clips_enemy();
+    enemy2_.set_clips_enemy2();
 
     Uint32 frameStart;
     int frameTime;
@@ -321,14 +320,14 @@ int main(int argc, char* argv[])
             enemy_.increase_speed(score_val/10);
             enemy_.harder(score_val/10);
 
-            enemy2_.Show_enemy(g_screen);
+            enemy2_.Show_enemy2(g_screen);
             enemy2_.Move2();
-            enemy2_.increase_speed2(score_val/10);
+            enemy2_.increase_speed(score_val/10);
 
             //check collide
-            if(p_player.getPosX() + 30 -16 >= enemy2_.getPos__X() && p_player.getPosX() + 12  <= enemy2_.getPos__X() + 57)
+            if(p_player.getPosX() + 30 -16 >= enemy2_.getPos__X2() && p_player.getPosX() + 12  <= enemy2_.getPos__X2() + 57)
             {
-                if(p_player.getPosY() + 15>= enemy2_.getPos__Y())
+                if(p_player.getPosY() + 15>= enemy2_.getPos__Y2())
                 {
                     collide =  true;
                 }
@@ -348,7 +347,7 @@ int main(int argc, char* argv[])
                     g_background[i].back_groundSpeed[i] = 0;
                 }
                 p_player.Pausee();
-                enemy2_.Pause2();
+                enemy2_.Pause1();
                 enemy_.Pause1();
 
                 std::string end_game1 = "YOU LOSE !!!!  Press SPACE to replay or ESC to quit game !!!";
@@ -386,7 +385,7 @@ int main(int argc, char* argv[])
 
                     enemy_.Set_default_enemy1();
 
-                    enemy2_.Set_default_enemy2();
+                    enemy2_.Set_default_enemy1();
 
                     Play_Again = false;
             }

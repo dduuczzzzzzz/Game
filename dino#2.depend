@@ -20,7 +20,7 @@
 	"CommonFunc.h"
 	<string>
 
-1618502725 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\main.cpp
+1618801099 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -28,7 +28,6 @@
 	"GameBase.h"
 	"MainObject.h"
 	"Enemy.h"
-	"onGroundEnemy.h"
 	"GameUltils.h"
 
 1618542327 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\mainobject.h
@@ -52,10 +51,10 @@
 	"GameBase.h"
 	<vector>
 
-1618363038 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\enemy.cpp
+1618800952 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\enemy.cpp
 	"Enemy.h"
 
-1618363038 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\enemy.h
+1618800952 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\enemy.h
 	"CommonFunc.h"
 	"GameBase.h"
 	<cstdlib>

@@ -69,12 +69,6 @@
 			<Option target="Debug" />
 		</Unit>
 		<Unit filename="main.cpp" />
-		<Unit filename="onGroundEnemy.cpp">
-			<Option target="Debug" />
-		</Unit>
-		<Unit filename="onGroundEnemy.h">
-			<Option target="Debug" />
-		</Unit>
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
