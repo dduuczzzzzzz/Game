@@ -23,7 +23,7 @@ const int RENDER_DRAW_COLOR = 0xff;
 
 const int Background = 6;
 
-const int FPS = 32;
+const int FPS = 30;
 const int frameDelay = 1000/FPS;
 
 #define GROUND 415
@@ -65,6 +65,14 @@ const int EXIT_BUTTON_POSX = 420;
 const int EXIT_BUTTON_POSY = 402;
 const int BACK_BUTTON_POSX = 31;
 const int BACK_BUTTON_POSY = 29;
+
+static Mix_Music *gMenu = NULL;
+static Mix_Chunk *gPlayer = NULL;
+static Mix_Chunk *gDino = NULL;
+static Mix_Chunk *gJump = NULL;
+static Mix_Chunk *gClick = NULL;
+static Mix_Music *gPlay = NULL;
+static Mix_Chunk *gLose = NULL;
 
 #define BIG 0
 #define SMALL 1

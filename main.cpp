@@ -53,6 +53,24 @@ bool Init()
         }
     if(TTF_Init() == -1)  {success = false;}
     else {font = TTF_OpenFont("font/pixel.ttf",15);}
+
+    if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+    {
+        return false;
+    }
+        gMenu = Mix_LoadMUS("sounds/theme.wav");
+        gPlayer = Mix_LoadWAV("sounds/adventure chose.wav");
+        gDino = Mix_LoadWAV("sounds/dino chose.wav");
+        gJump = Mix_LoadWAV("sounds/jump.wav");
+        gClick = Mix_LoadWAV("sounds/button click.wav");
+        gLose = Mix_LoadWAV("sounds/lose.wav");
+        gPlay = Mix_LoadMUS("sounds/playing.wav");
+
+    if(gMenu == NULL || gPlayer == NULL || gDino == NULL || gJump == NULL || gClick == NULL || gLose == NULL || gPlay == NULL)
+    {
+        return false;
+    }
+
     if(font == NULL)
     {
         success = false;
@@ -157,7 +175,7 @@ int main(int argc, char* argv[])
     int p = 0;
     Uint32 score_val = 0;
 
-     while(Menu)
+    while(Menu)
             {
                 while(SDL_PollEvent(&g_event)!= 0)
                 {
@@ -171,6 +189,7 @@ int main(int argc, char* argv[])
                             {
                                 Instruct = true;
                                 Menu = false;
+                                Mix_PlayChannel(-1, gClick, 0);
                             }
                             break;
                             case SDLK_ESCAPE:
@@ -180,9 +199,11 @@ int main(int argc, char* argv[])
                             }
 
                 }
+                Mix_PlayMusic(gMenu, -1);
                 g_Theme.Render3(g_screen,NULL,NULL);
                 SDL_RenderPresent(g_screen);
-            }
+                }
+
             }
     while(Instruct)
             {
@@ -198,12 +219,14 @@ int main(int argc, char* argv[])
                                     {
                                         Instruct = false;
                                         Chose_player = true;
+                                        Mix_PlayChannel(-1, gClick, 0);
                                     }
                                 break;
                             }
                     }
                 g_instruct.Render3(g_screen,NULL,NULL);
                 SDL_RenderPresent(g_screen);
+                Mix_PlayMusic(gMenu, -1);
 
             }
     while(Chose_player)
@@ -221,6 +244,7 @@ int main(int argc, char* argv[])
                             Chose_player = false;
                             Player1 = true;
                             p = 1;
+                            Mix_PlayChannel(-1, gPlayer, 0);
                         }
                     break;
                     case SDLK_2:
@@ -228,6 +252,7 @@ int main(int argc, char* argv[])
                             Chose_player = false;
                             Player2 = true;
                             p = 2;
+                            Mix_PlayChannel(-1, gDino, 0);
                         }
                     break;
                 }
@@ -248,6 +273,7 @@ int main(int argc, char* argv[])
             {
                 Player1 = false;
                 GameRunning = true;
+                Mix_PlayChannel(-1, gClick, 0);
             }
         }
         g_player1.Render3(g_screen, NULL, NULL);
@@ -266,6 +292,7 @@ int main(int argc, char* argv[])
             {
                 Player2 = false;
                 GameRunning = true;
+                Mix_PlayChannel(-1, gClick, 0);
             }
         }
         g_player2.Render3(g_screen, NULL, NULL);
@@ -313,7 +340,7 @@ int main(int argc, char* argv[])
 
             p_player.Jumpp();
             p_player.Show(g_screen,p);
-            p_player.HandleAction(g_event );
+            p_player.HandleAction(g_event, gJump);
 
             enemy_.Show_enemy(g_screen);
             enemy_.Move();
@@ -342,6 +369,7 @@ int main(int argc, char* argv[])
             }
             if(collide == true)
             {
+                Mix_PlayChannel(-1, gLose, 0);
                 for(int i=0;i <Background;i++)
                 {
                     g_background[i].back_groundSpeed[i] = 0;
@@ -364,6 +392,7 @@ int main(int argc, char* argv[])
                                 Play_Again = true;
                                 score_val = 0;
                                 collide = false;
+                                Mix_PlayChannel(-1, gClick, 0);
                             }
                             break;
                             case SDLK_ESCAPE:
