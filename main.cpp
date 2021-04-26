@@ -58,13 +58,13 @@ bool Init()
     {
         return false;
     }
-        gMenu = Mix_LoadMUS("sounds/theme.wav");
+        gMenu = Mix_LoadMUS("sounds/bkgr_audio.wav");
         gPlayer = Mix_LoadWAV("sounds/adventure chose.wav");
         gDino = Mix_LoadWAV("sounds/dino chose.wav");
         gJump = Mix_LoadWAV("sounds/jump.wav");
         gClick = Mix_LoadWAV("sounds/button click.wav");
         gLose = Mix_LoadWAV("sounds/lose.wav");
-        gPlay = Mix_LoadMUS("sounds/playing.wav");
+        gPlay = Mix_LoadMUS("sounds/theme.wav");
 
     if(gMenu == NULL || gPlayer == NULL || gDino == NULL || gJump == NULL || gClick == NULL || gLose == NULL || gPlay == NULL)
     {
@@ -174,7 +174,7 @@ int main(int argc, char* argv[])
     bool Player2 = false;
     int p = 0;
     Uint32 score_val = 0;
-
+    Mix_PlayMusic(gMenu, -1);
     while(Menu)
             {
                 while(SDL_PollEvent(&g_event)!= 0)
@@ -199,7 +199,7 @@ int main(int argc, char* argv[])
                             }
 
                 }
-                Mix_PlayMusic(gMenu, -1);
+
                 g_Theme.Render3(g_screen,NULL,NULL);
                 SDL_RenderPresent(g_screen);
                 }
@@ -226,7 +226,6 @@ int main(int argc, char* argv[])
                     }
                 g_instruct.Render3(g_screen,NULL,NULL);
                 SDL_RenderPresent(g_screen);
-                Mix_PlayMusic(gMenu, -1);
 
             }
     while(Chose_player)
@@ -298,13 +297,14 @@ int main(int argc, char* argv[])
         g_player2.Render3(g_screen, NULL, NULL);
         SDL_RenderPresent(g_screen);
     }
+    Mix_FreeMusic(gMenu);
 
-    if(p == 1)
+    if(p == RUNNER)
     {
         p_player.loadIMG_player1("sprites/run_1.png", g_screen);
         p_player.set_clips(p);
     }
-    else if(p == 2)
+    else if(p == DINO)
     {
         p_player.loadIMG_player2("sprites/char.png", g_screen);
         p_player.set_clips(p);
@@ -313,6 +313,10 @@ int main(int argc, char* argv[])
 
     while(GameRunning)
     {
+        Mix_PlayMusic(gPlay, -1);
+        bool Play = true;
+        while(Play)
+        {
             while(SDL_PollEvent(&g_event)!= 0)
             {
                 if(g_event.type == SDL_QUIT)
@@ -324,8 +328,6 @@ int main(int argc, char* argv[])
             frameStart = SDL_GetTicks();
 
             SDL_SetRenderDrawColor(g_screen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
-
-
 
             // tinh diem tu luc bat dau tro choi
             score_val += 4;
@@ -340,7 +342,7 @@ int main(int argc, char* argv[])
 
             p_player.Jumpp();
             p_player.Show(g_screen,p);
-            p_player.HandleAction(g_event, gJump);
+            p_player.HandleAction(g_event, gJump, collide);
 
             enemy_.Show_enemy(g_screen);
             enemy_.Move();
@@ -351,25 +353,14 @@ int main(int argc, char* argv[])
             enemy2_.Move2();
             enemy2_.increase_speed(score_val/10);
 
-            //check collide
-            if(p_player.getPosX() + 30 -16 >= enemy2_.getPos__X2() && p_player.getPosX() + 12  <= enemy2_.getPos__X2() + 57)
+            if(Check_collision(p_player, enemy_, enemy2_) == true)
             {
-                if(p_player.getPosY() + 15>= enemy2_.getPos__Y2())
-                {
-                    collide =  true;
-                }
-            }
-            // trừ và cộng các vị trí đi 1 số đơn vị để hình ảnh va chạm trông thật hơn
-            else if(p_player.getPosX()+30 - 15  >= enemy_.getPos_X() +32 - 18 && p_player.getPosX()   <= enemy_.getPos_X()+32 )
-            {
-            if(p_player.getPosY()+45 <= enemy_.getPos_Y()+32 +15&& p_player.getPosY()+45  >= enemy_.getPos_Y()+15)
-            {
-                collide =  true;
-            }
+                collide = true;
             }
             if(collide == true)
             {
-                Mix_PlayChannel(-1, gLose, 0);
+                Mix_PauseMusic();
+
                 for(int i=0;i <Background;i++)
                 {
                     g_background[i].back_groundSpeed[i] = 0;
@@ -384,7 +375,8 @@ int main(int argc, char* argv[])
                 endgame1.LoadFromRenderText(font, g_screen);
                 endgame1.RenderText(g_screen, 150, 70);
 
-
+                if (g_event.type == SDL_KEYUP && g_event.key.repeat == 0)
+                    {
                         switch (g_event.key.keysym.sym)
                         {
                             case SDLK_SPACE:
@@ -397,10 +389,12 @@ int main(int argc, char* argv[])
                             break;
                             case SDLK_ESCAPE:
                             {
-                                 GameRunning = false;
+                                Play = false;
+                                GameRunning = false;
                             }
                             break;
                         }
+                    }
 
             }
             if(Play_Again == true)
@@ -415,6 +409,8 @@ int main(int argc, char* argv[])
                     enemy_.Set_default_enemy1();
 
                     enemy2_.Set_default_enemy1();
+
+                    Play = false;
 
                     Play_Again = false;
             }
@@ -442,7 +438,7 @@ int main(int argc, char* argv[])
             SDL_RenderPresent(g_screen);
             //}
 
-
+        }
     }
 
     close();

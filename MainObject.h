@@ -21,7 +21,7 @@ public:
     bool loadIMG_player1(std::string path, SDL_Renderer* screen);
     bool loadIMG_player2(std::string path, SDL_Renderer* screen);
     void Show(SDL_Renderer* des, int p);
-    void HandleAction(SDL_Event events, Mix_Chunk *gJump);
+    void HandleAction(SDL_Event events, Mix_Chunk *gJump, bool collide);
     void set_clips(int p);
     bool onGround();
     void Jumpp();

@@ -170,7 +170,7 @@ void MainObject::Show(SDL_Renderer* des, int p)
 
 }
 
-void MainObject::HandleAction(SDL_Event events, Mix_Chunk *gJump)
+void MainObject::HandleAction(SDL_Event events, Mix_Chunk *gJump, bool collide)
 {
 
 	if (events.type == SDL_KEYDOWN && events.key.repeat == 0)
@@ -182,7 +182,10 @@ void MainObject::HandleAction(SDL_Event events, Mix_Chunk *gJump)
 				if (onGround())
 				{
 					status = JUMP;
-					Mix_PlayChannel(-1, gJump, 0);
+					if(collide == false)
+                    {
+                        Mix_PlayChannel(-1, gJump, 0);
+                    }
 				}
 			}
 		}
