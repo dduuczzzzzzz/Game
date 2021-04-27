@@ -188,7 +188,7 @@ int GameBase::getHeight()
     return height;
 }
 
-void GameBase::increase_background_speed(Uint32 time_)
+void GameBase::increase_background_speed(int time_)
 {
     if(time_ % 100 == 0)
     {

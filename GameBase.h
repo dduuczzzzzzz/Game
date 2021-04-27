@@ -6,7 +6,9 @@
 #include <SDL_ttf.h>
 #include "CommonFunc.h"
 #include <string>
-
+#include <iostream>
+#include <fstream>
+#include <sstream>
 
 class GameBase
 {
@@ -33,7 +35,7 @@ public:
     int getWidth();
     int getHeight();
     double back_groundSpeed[6];
-    void increase_background_speed(Uint32 time_);
+    void increase_background_speed(int time_);
     void Set_default();
 
 protected:

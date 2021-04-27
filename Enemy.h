@@ -33,11 +33,11 @@ public:
     int getPos__Y2();
 
     void Pause1();
-    void harder(Uint32 time_);
-    void increase_speed(Uint32 time_);
+    void harder(int time_);
+    void increase_speed(int time_);
     void Set_default_enemy1();
 
-    void increase_speed2(Uint32 time_);
+    void increase_speed2(int time_);
 
 private:
     float x_value;

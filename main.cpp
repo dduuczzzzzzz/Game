@@ -141,16 +141,10 @@ int main(int argc, char* argv[])
     {
         cout << "error -- 2" << endl;
     }
-
-    // Menu
     GameBase Menu_game;
-
-     // score
     GameBase score_game;
-
+    GameBase highscore_game;
     GameBase endgame1;
-
-    // player and monsters
     MainObject p_player;
 
     Enemy enemy_;
@@ -163,7 +157,7 @@ int main(int argc, char* argv[])
 
     Uint32 frameStart;
     int frameTime;
-
+    int p = 0;
     bool GameRunning = false;
     bool collide = false;
     bool Menu = true;
@@ -172,8 +166,7 @@ int main(int argc, char* argv[])
     bool Chose_player = false;
     bool Player1 = false;
     bool Player2 = false;
-    int p = 0;
-    Uint32 score_val = 0;
+    int score_val = 0;
     Mix_PlayMusic(gMenu, -1);
     while(Menu)
             {
@@ -197,13 +190,10 @@ int main(int argc, char* argv[])
                                  GameRunning = false;
                                  Menu = false;
                             }
-
                 }
-
                 g_Theme.Render3(g_screen,NULL,NULL);
                 SDL_RenderPresent(g_screen);
                 }
-
             }
     while(Instruct)
             {
@@ -226,7 +216,6 @@ int main(int argc, char* argv[])
                     }
                 g_instruct.Render3(g_screen,NULL,NULL);
                 SDL_RenderPresent(g_screen);
-
             }
     while(Chose_player)
     {
@@ -258,7 +247,6 @@ int main(int argc, char* argv[])
             }
             g_select_player.Render3(g_screen,NULL,NULL);
             SDL_RenderPresent(g_screen);
-
     }
     while(Player1)
     {
@@ -278,7 +266,6 @@ int main(int argc, char* argv[])
         g_player1.Render3(g_screen, NULL, NULL);
         SDL_RenderPresent(g_screen);
     }
-
     while(Player2)
     {
         while(SDL_PollEvent(&g_event)!= 0)
@@ -310,10 +297,10 @@ int main(int argc, char* argv[])
         p_player.set_clips(p);
     }
 
-
     while(GameRunning)
     {
         Mix_PlayMusic(gPlay, -1);
+        std::string highscore_val = GetHSfromFile("high_score.txt");
         bool Play = true;
         while(Play)
         {
@@ -352,11 +339,14 @@ int main(int argc, char* argv[])
             enemy2_.Show_enemy2(g_screen);
             enemy2_.Move2();
             enemy2_.increase_speed(score_val/10);
+            GetHighscore("high_score.txt", score_val/10, highscore_val);
 
             if(Check_collision(p_player, enemy_, enemy2_) == true)
             {
                 collide = true;
             }
+            //End_Game(collide, p_player, enemy_, enemy2_, Play_Again, Play, GameRunning, score_val, gClick, g_background, endgame1, font, g_event, g_screen);
+
             if(collide == true)
             {
                 Mix_PauseMusic();
@@ -370,13 +360,9 @@ int main(int argc, char* argv[])
                 enemy_.Pause1();
 
                 std::string end_game1 = "YOU LOSE !!!!  Press SPACE to replay or ESC to quit game !!!";
-                endgame1.SetColor();
-                endgame1.SetText(end_game1);
-                endgame1.LoadFromRenderText(font, g_screen);
-                endgame1.RenderText(g_screen, 150, 70);
+                Text_func(end_game1, endgame1, font, g_screen, 150, 70);
 
-                if (g_event.type == SDL_KEYUP && g_event.key.repeat == 0)
-                    {
+
                         switch (g_event.key.keysym.sym)
                         {
                             case SDLK_SPACE:
@@ -394,8 +380,9 @@ int main(int argc, char* argv[])
                             }
                             break;
                         }
-                    }
 
+
+               // std:: cout << score_val/10 << std::endl << highscore_val;
             }
             if(Play_Again == true)
             {
@@ -430,10 +417,10 @@ int main(int argc, char* argv[])
             std::string str_ = std::to_string(score_val/10);
             str_score += str_;
             if (collide == true) score_val-= 4;
-            score_game.SetColor();
-            score_game.SetText(str_score);
-            score_game.LoadFromRenderText(font, g_screen);
-            score_game.RenderText(g_screen, SCREEN_WIDTH - 200, 15);
+            Text_func(str_score, score_game, font, g_screen, SCREEN_WIDTH - 200, 15);
+            std::string highscore = "HIGH SCORE: ";
+            highscore += highscore_val;
+            Text_func(highscore, highscore_game, font, g_screen, SCREEN_WIDTH- 200, 45);
 
             SDL_RenderPresent(g_screen);
             //}

@@ -208,7 +208,7 @@ void Enemy::Pause1()
     pause = true;
 }
 
-void Enemy::harder(Uint32 time_)
+void Enemy::harder(int time_)
 {
     if(pause == false)
     {
@@ -234,7 +234,7 @@ void Enemy::harder(Uint32 time_)
     }
 }
 
-void Enemy::increase_speed(Uint32 time_)
+void Enemy::increase_speed(int time_)
 {
     if(time_ % 100 == 0)
     {

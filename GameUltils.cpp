@@ -40,5 +40,40 @@ void Draw_EndGame(GameBase endgame1, GameBase endgame2,  TTF_Font *font)
 
 }
 
+void Text_func(std::string &a, GameBase text, TTF_Font* font, SDL_Renderer *g_screen, int x, int y)
+{
+    text.SetColor();
+    text.SetText(a);
+    text.LoadFromRenderText(font, g_screen);
+    text.RenderText(g_screen, x, y);
+}
 
+std::string GetHSfromFile(std::string path)
+{
+    std::fstream HighScoreFile;
+    std::string highscore;
 
+    HighScoreFile.open(path, std::ios::in);
+    HighScoreFile >> highscore;
+
+    return highscore;
+}
+
+void GetHighscore(std::string path, const int& score, const std::string & old_high_score)
+{
+    int oldHighScore = 0;
+	std::fstream HighScoreFile;
+	std::string newHighScore;
+	std::stringstream ConvertToInt(old_high_score);
+
+	HighScoreFile.open(path, std::ios::out);
+
+	ConvertToInt >> oldHighScore;
+	if (score > oldHighScore)
+	{
+		oldHighScore = score;
+	}
+	newHighScore = std::to_string(oldHighScore);
+
+	HighScoreFile << newHighScore;
+}
