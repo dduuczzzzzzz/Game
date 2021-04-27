@@ -111,7 +111,6 @@ bool loadBackground()
     {
         success = false;
     }
-
     return success;
 }
 
@@ -121,6 +120,26 @@ void close()
     {
         g_background[i].Free();
     }
+    g_Theme.Free();
+    g_instruct.Free();
+    g_select_player.Free();
+    g_player1.Free();
+    g_player2.Free();
+    Mix_FreeMusic(gMenu);
+    Mix_FreeMusic(gPlay);
+    Mix_FreeChunk(gClick);
+    Mix_FreeChunk(gPlayer);
+    Mix_FreeChunk(gDino);
+    Mix_FreeChunk(gJump);
+    Mix_FreeChunk(gLose);
+    gMenu = NULL;
+    gPlay = NULL;
+    gClick = NULL;
+    gPlayer = NULL;
+    gDino = NULL;
+    gJump = NULL;
+    gLose = NULL;
+
     SDL_DestroyRenderer(g_screen);
     g_screen = NULL;
 
@@ -128,6 +147,7 @@ void close()
     g_window = NULL;
 
     IMG_Quit();
+    Mix_Quit();
     SDL_Quit();
 }
 
@@ -166,6 +186,7 @@ int main(int argc, char* argv[])
     bool Chose_player = false;
     bool Player1 = false;
     bool Player2 = false;
+    bool end_Game;
     int score_val = 0;
     Mix_PlayMusic(gMenu, -1);
     while(Menu)
@@ -341,16 +362,35 @@ int main(int argc, char* argv[])
             enemy2_.increase_speed(score_val/10);
             GetHighscore("high_score.txt", score_val/10, highscore_val);
 
+            //FPS
+            frameTime = SDL_GetTicks() - frameStart;
+            if(frameDelay > frameTime)
+            {
+                SDL_Delay(frameDelay - frameTime);
+            }
+
+            std::string str_score = "SCORE: ";
+            std::string str_ = std::to_string(score_val/10);
+            str_score += str_;
+            if (collide == true) score_val-= 4;
+            Text_func(str_score, score_game, font, g_screen, SCREEN_WIDTH - 200, 15);
+            std::string highscore = "HIGH SCORE: ";
+            highscore += highscore_val;
+            Text_func(highscore, highscore_game, font, g_screen, SCREEN_WIDTH- 200, 45);
+
             if(Check_collision(p_player, enemy_, enemy2_) == true)
             {
-                collide = true;
+                 collide = true;
+                std::string end_game1 = "YOU LOSE !!!!  Press SPACE to replay or ESC to quit game !!!";
+                Text_func(end_game1, endgame1, font, g_screen, 150, 70);
+                SDL_RenderPresent(g_screen);
             }
             //End_Game(collide, p_player, enemy_, enemy2_, Play_Again, Play, GameRunning, score_val, gClick, g_background, endgame1, font, g_event, g_screen);
 
             if(collide == true)
             {
                 Mix_PauseMusic();
-
+                Mix_PlayChannel(-1, gLose, 0);
                 for(int i=0;i <Background;i++)
                 {
                     g_background[i].back_groundSpeed[i] = 0;
@@ -359,30 +399,42 @@ int main(int argc, char* argv[])
                 enemy2_.Pause1();
                 enemy_.Pause1();
 
-                std::string end_game1 = "YOU LOSE !!!!  Press SPACE to replay or ESC to quit game !!!";
-                Text_func(end_game1, endgame1, font, g_screen, 150, 70);
+                //SDL_RenderPresent(g_screen);
 
-
-                        switch (g_event.key.keysym.sym)
+                end_Game = false;
+                while(!end_Game)
+                {
+                    while(SDL_PollEvent(&g_event) != 0)
+                    {
+                        if(g_event.type == SDL_QUIT)
                         {
-                            case SDLK_SPACE:
+                            GameRunning = false;
+                        }
+                        if(g_event.type == SDL_KEYDOWN)
+                        {
+                            switch (g_event.key.keysym.sym)
                             {
-                                Play_Again = true;
-                                score_val = 0;
-                                collide = false;
-                                Mix_PlayChannel(-1, gClick, 0);
+                                case SDLK_SPACE:
+                                {
+                                    Play_Again = true;
+                                    score_val = 0;
+                                    collide = false;
+                                    Mix_PlayChannel(-1, gClick, 0);
+                                    end_Game = true;
+                                }
+                                break;
+                                case SDLK_ESCAPE:
+                                {
+                                    end_Game = true;
+                                    Play = false;
+                                    GameRunning = false;
+                                }
+                                break;
                             }
-                            break;
-                            case SDLK_ESCAPE:
-                            {
-                                Play = false;
-                                GameRunning = false;
-                            }
-                            break;
                         }
 
-
-               // std:: cout << score_val/10 << std::endl << highscore_val;
+                    }
+                }
             }
             if(Play_Again == true)
             {
@@ -402,28 +454,7 @@ int main(int argc, char* argv[])
                     Play_Again = false;
             }
 
-            //FPS
-            frameTime = SDL_GetTicks() - frameStart;
-            if(frameDelay > frameTime)
-            {
-                SDL_Delay(frameDelay - frameTime);
-            }
-
-
-            //score game
-            //if(Menu == false)
-            //{
-            std::string str_score = "SCORE: ";
-            std::string str_ = std::to_string(score_val/10);
-            str_score += str_;
-            if (collide == true) score_val-= 4;
-            Text_func(str_score, score_game, font, g_screen, SCREEN_WIDTH - 200, 15);
-            std::string highscore = "HIGH SCORE: ";
-            highscore += highscore_val;
-            Text_func(highscore, highscore_game, font, g_screen, SCREEN_WIDTH- 200, 45);
-
             SDL_RenderPresent(g_screen);
-            //}
 
         }
     }

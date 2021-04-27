@@ -23,7 +23,7 @@
 	<fstream>
 	<sstream>
 
-1619494304 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\main.cpp
+1619528961 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -74,14 +74,14 @@
 1618541899 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\ongroundenemy.cpp
 	"onGroundEnemy.h"
 
-1619494023 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\gameultils.h
+1619516669 c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\gameultils.h
 	"GameBase.h"
 	"CommonFunc.h"
 	"MainObject.h"
 	"Enemy.h"
 	"onGroundEnemy.h"
 
-1619494023 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\gameultils.cpp
+1619516669 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\gameultils.cpp
 	"GameUltils.h"
 
 1617983941 source:c:\dino sdl test for game\day 04\tesst num 1\dino#2\dino#2\textfunc.cpp
