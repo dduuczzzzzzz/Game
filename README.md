@@ -1,6 +1,6 @@
 # Game
 
-Tự đánh giá được 8 điểm
+Tự đánh giá 
 Các việc làm: 
 
 
